@@ -1031,6 +1031,7 @@ urlpatterns = [
     path('cash_statement',views.cash_statement,name='cash_statement'),
     path('edit_add_cash/<int:id>',views.edit_add_cash,name='edit_add_cash'),
  
-     
+    path('employeeloanpage',views.employeeloanpage,name='employeeloanpage'),
+    path('newemployeeloanloan',views.newemployeeloanloan,name='newemployeeloanloan'),
      
 ]

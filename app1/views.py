@@ -41281,7 +41281,15 @@ def edit_add_cash(request,id):
 
 
 
+def employeeloanpage(request):
+    cmp1 = company.objects.get(id=request.session["uid"])
+    employee=payrollemployee.objects.filter(cid_id=request.session["uid"])
+    return render(request,'app1/employeeloanpage.html',{'employee':employee,'cmp1':cmp1})
 
+def newemployeeloanloan(request):
+    cmp1 = company.objects.get(id=request.session["uid"])
+    employee=payrollemployee.objects.filter(cid_id=request.session["uid"])
+    return render(request,'app1/newemployeeloanloan.html',{'employee':employee,'cmp1':cmp1})
 
 
 
