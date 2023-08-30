@@ -2038,3 +2038,15 @@ class bank_transactions(models.Model):
     cash_date=models.DateField(blank=True,null=True)
     banking=models.ForeignKey(bankings_G, on_delete=models.CASCADE ,null=True,blank=True)
     cid = models.ForeignKey(company, on_delete=models.CASCADE)
+
+class EmployeeLoan(models.Model):  
+      employee = models.ForeignKey(payrollemployee, on_delete=models.CASCADE)
+      LoanAmount = models.IntegerField(blank=True,null=True)
+      LoanDate = models.CharField(max_length=100)
+      ExperyDate = models.CharField(max_length=100)
+      MonthlyCut_percentage = models.IntegerField(blank=True,null=True)
+      MonthlyCut_Amount = models.IntegerField(blank=True,null=True)
+      Note = models.TextField(max_length=100)
+      File = models.FileField(upload_to='loanfile',default="")
+      company = models.ForeignKey(company, on_delete=models.CASCADE)
+      status = models.CharField(max_length=20,null=True)

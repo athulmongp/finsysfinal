@@ -1032,6 +1032,20 @@ urlpatterns = [
     path('edit_add_cash/<int:id>',views.edit_add_cash,name='edit_add_cash'),
  
     path('employeeloanpage',views.employeeloanpage,name='employeeloanpage'),
-    path('newemployeeloanloan',views.newemployeeloanloan,name='newemployeeloanloan'),
+    path('newemployeeloan',views.newemployeeloan,name='newemployeeloan'),
+    path('listemployee_loan',views.listemployee_loan,name='listemployee_loan'),
+    path('addemployeeloan',views.addemployeeloan,name='addemployeeloan'),
+    path('AddEmployeeInloanPage',views.AddEmployeeInloanPage,name='AddEmployeeInloanPage'),
+    path('employee_details<int:id>',views.employee_details,name='employee_details'),
+    path('active_loan/<str:employeeid>', views.active_loan, name='active_loan'),
+    path('inactive_loan/<str:employeeid>', views.inactive_loan, name='inactive_loan'),
+    path('editloan/<int:eid>', views.editloan, name='editloan'),
+    path('editloan_action/<int:eid>', views.editloan_action, name='editloan_action'),
+    path('deleteloan/<int:eid>', views.deleteloan, name='deleteloan'),
+    path('loan_add_file/<int:id>', views.loan_add_file, name='loan_add_file'),
+    path('activeloanpage', views.activeloanpage, name='activeloanpage'),
+    path('inactiveloanpage', views.inactiveloanpage, name='inactiveloanpage'),
+    path('sortemployeename', views.sortemployeename, name='sortemployeename'),
+    path('sortloanamount', views.sortloanamount, name='sortloanamount'),
      
 ]

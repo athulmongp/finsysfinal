@@ -41280,49 +41280,264 @@ def edit_add_cash(request,id):
 
 
 
-
+# ------------athul-------
 def employeeloanpage(request):
     cmp1 = company.objects.get(id=request.session["uid"])
-    employee=payrollemployee.objects.filter(cid_id=request.session["uid"])
+    employee=EmployeeLoan.objects.filter(company=request.session["uid"])
+    print(employee)
     return render(request,'app1/employeeloanpage.html',{'employee':employee,'cmp1':cmp1})
 
-def newemployeeloanloan(request):
+def activeloanpage(request):
+    cmp1 = company.objects.get(id=request.session["uid"])
+    employee=EmployeeLoan.objects.filter(company=request.session["uid"],status='active')
+    print(employee)
+    return render(request,'app1/employeeloanpage.html',{'employee':employee,'cmp1':cmp1})    
+
+def inactiveloanpage(request):
+    cmp1 = company.objects.get(id=request.session["uid"])
+    employee=EmployeeLoan.objects.filter(company=request.session["uid"],status='inactive')
+    print(employee)
+    return render(request,'app1/employeeloanpage.html',{'employee':employee,'cmp1':cmp1})  
+  
+def sortemployeename(request):
+    cmp1 = company.objects.get(id=request.session["uid"])
+    employee=EmployeeLoan.objects.filter(company=request.session["uid"]).order_by('employee__firstname', 'employee__lastname')
+   
+    return render(request,'app1/employeeloanpage.html',{'employee':employee,'cmp1':cmp1})
+
+def sortloanamount(request):
+    cmp1 = company.objects.get(id=request.session["uid"])
+    employee=EmployeeLoan.objects.filter(company=request.session["uid"]).order_by('LoanAmount')
+   
+    return render(request,'app1/employeeloanpage.html',{'employee':employee,'cmp1':cmp1}) 
+ 
+
+
+
+
+@login_required(login_url='regcomp')
+def listemployee_loan(request):
+    if 'uid' in request.session:
+        if request.session.has_key('uid'):
+            uid = request.session['uid']
+        else:
+            return redirect('/')
+        comp = company.objects.get(id=request.session['uid'])
+        id = request.POST.get('id').split(" ")[0]
+        cust = payrollemployee.objects.get(employeeid = id, cid = request.session['uid'])
+        email = cust.email
+        employeeid = cust.employeeid
+        city = cust.city
+        joindate = cust.joindate
+        amount = cust.amount
+        country = cust.country
+       
+    return JsonResponse({'email': email,'employeeid': employeeid,'joindate':joindate,'amount': amount},safe=False)
+
+
+def newemployeeloan(request):
     cmp1 = company.objects.get(id=request.session["uid"])
     employee=payrollemployee.objects.filter(cid_id=request.session["uid"])
     return render(request,'app1/newemployeeloanloan.html',{'employee':employee,'cmp1':cmp1})
 
+def addemployeeloan(request):
+    cmpy = company.objects.get(id=request.session["uid"])
+    if request.method == 'POST':
+        empid = request.POST['employee']
+        employee = payrollemployee.objects.get(employeeid=empid)
+        Loan_Amound = request.POST['Loan_Amound'] 
+        loandate = request.POST['loandate'] 
+        experydate = request.POST['experydate']
+        cuttingPercentage = request.POST['cuttingPercentage']
+        cuttinamount = request.POST['cuttinamount']
+        ca = ((int(cuttingPercentage)/100)*int(Loan_Amound))
+        file = request.FILES['file']
+        Note = request.POST['Note']
+
+        data=EmployeeLoan(employee=employee,LoanAmount=Loan_Amound,LoanDate=loandate,ExperyDate=experydate,MonthlyCut_percentage=cuttingPercentage,MonthlyCut_Amount=ca,Note=Note,File=file,company=cmpy,status='Active')
+        data.save()
+    return redirect('employeeloanpage')
+
+def AddEmployeeInloanPage(request):
+    try: 
+        cmpId = company.objects.get(id=request.session["uid"]) 
+        if request.method == 'POST':
+            title = request.POST['title']
+            firstname = request.POST['firstname'] 
+            lastname = request.POST['lastname']
+            alias = request.POST['alias']
+            location = request.POST['location']
+            email = request.POST['email']
+           
+            mobile = request.POST['mobile']
+            employees = request.POST['employees']
+            joindate = request.POST['joindate']
+            try:
+                img1 = request.FILES['image']
+            except:
+                img1 = 'default' 
+            salarydetails = request.POST['salarydetails']
+            effectivefrom = request.POST['effectivefrom']
+            payhead = request.POST['payhead']
+            hours = request.POST['hours']
+            rate = request.POST['rate']
+            amount = request.POST['amount']
+            employeeno = request.POST['employeeno']
+            designation = request.POST['designation']
+            function = request.POST['function']
+            gender = request.POST['gender']
+            dateofbirth = request.POST['dateofbirth']
+            bloodgroup = request.POST['bloodgroup']
+            fathersmothersname = request.POST['fathersmothersname']
+            spousename = request.POST['spousename']
+            
+           
+            generalphone = request.POST['generalphone']
+            bankdetails = request.POST['bankdetails']
+            acno = request.POST['acno']
+            ifsccode = request.POST['ifsccode']
+            bankname = request.POST['bankname']
+            branchname = request.POST['branchname']
+            transactiontype = request.POST['transactiontype']
+            pannumber = request.POST['pannumber']
+            universalaccountnumber = request.POST['universalaccountnumber']
+            pfaccountnumber = request.POST['pfaccountnumber']
+            praccountnumber = request.POST['praccountnumber']
+            esinumber = request.POST['esinumber']
+            tdsapp = request.POST['tdsapp']
+            tdstype = request.POST['tdstype']
+            tds = request.POST['tds']
+            street = request.POST['street']
+            city = request.POST['city']
+            state = request.POST['state']
+            pincode = request.POST['pincode']
+            country = request.POST['country']
+            tempstreet = request.POST['tempstreet']
+            tempcity = request.POST['tempcity']
+            tempstate = request.POST['tempstate']
+            temppincode = request.POST['temppincode']
+            tempcountry = request.POST['tempcountry'] 
+            adharnumber = request.POST['adharnumber'] 
+            try:
+                file = request.FILES['file']
+            except:
+                file = '' 
+            
+            emppayroll = payrollemployee(title=title,firstname=firstname,
+                                         lastname=lastname,alias=alias,cid=cmpId,
+                                         location=location,
+                                         email=email,
+                                         mobile=mobile,employees=employees,
+                                         joindate=joindate,
+                                         salarydetails=salarydetails,effectivefrom=effectivefrom,
+                                         hours=hours,rate=rate,
+                                         amount=amount,employeeno=employeeno,
+                                         designation=designation,function=function,
+                                         gender=gender,dateofbirth=dateofbirth,
+                                         bloodgroup=bloodgroup,fathersmothersname=fathersmothersname,
+                                         spousename=spousename,
+                                         generalphone=generalphone,
+                                         bankdetails=bankdetails,acno=acno,ifsccode=ifsccode,
+                                         bankname=bankname,branchname=branchname,
+                                         transactiontype=transactiontype,pannumber=pannumber,
+                                         universalaccountnumber=universalaccountnumber,
+                                         pfaccountnumber=pfaccountnumber,praccountnumber=praccountnumber,
+                                         esinumber=esinumber,istds=tdsapp,
+                                         tdstype=tdstype,tds=tds,street=street,
+                                         city=city,state=state,
+                                         pincode=pincode,country=country,
+                                         tempstreet=tempstreet,tempcity=tempcity,
+                                         tempstate=tempstate,temppincode=temppincode,
+                                         tempcountry=tempcountry,payhead=payhead,
+                                         adharnumber=adharnumber
+                                        )
+            if img1 != 'default':
+                emppayroll.image = img1
+
+            if file !="":
+                 emppayroll.file=file
+
+            emppayroll.save()
+            return redirect('newemployeeloan')
+    except:    
+        return redirect('newemployeeloan')
 
 
-
-
-
-
+def employee_details(request,id):
+    cmp1 = company.objects.get(id=request.session["uid"])
+    employee = EmployeeLoan.objects.get(id=id,company=request.session["uid"])
+   
+    return render(request,'app1/employee_details.html',{'employee': employee,'cmp1': cmp1})
     
+def active_loan(request,employeeid):
+    
+    employee=EmployeeLoan.objects.get(company=request.session["uid"], id=employeeid)
+    
+    employee.status="Active" 
 
+    employee.save()
+    return redirect('employee_details',employeeid)
 
+def inactive_loan(request,employeeid):
+    
+    employee=EmployeeLoan.objects.get(company=request.session["uid"], id=employeeid)
+    
+    employee.status="Inactive" 
 
+    employee.save()
+    return redirect('employee_details',employeeid)  
 
+def editloan(request,eid):
+    cmp1 = company.objects.get(id=request.session["uid"])
+    employee = EmployeeLoan.objects.get(id=eid,company=request.session["uid"])
+    loan=EmployeeLoan.objects.get(id=eid)
+    return render(request,'app1/editloan.html',{'loan':loan,'employee': employee,'cmp1': cmp1})    
 
+def editloan_action(request,eid):
+    cmp1 = company.objects.get(id=request.session["uid"])
+    employee = EmployeeLoan.objects.get(id=eid,company=request.session["uid"])
+    Loan_Amount = request.POST['Loan_Amound']
+    loandate = request.POST['loandate'] 
+    experydate = request.POST['experydate']
+    cuttingPercentage = request.POST['cuttingPercentage']
+    cuttinamount = request.POST['cuttinamount']
+    ca = ((int(cuttingPercentage)/100)*int(Loan_Amount))
+    
+    Note = request.POST['Note']
 
+    old=employee.File
+    new=request.FILES.get('file')
+    if old!=None and new==None:
+        employee.File=old
+    else:
+        employee.File=new
 
+    employee.LoanAmount = Loan_Amount
+    employee.LoanDate = loandate
+    employee.ExperyDate = experydate
+    employee.MonthlyCut_percentage = cuttingPercentage
+    employee.MonthlyCut_Amount = ca
+    employee.Note = Note
+    employee.save()    
+    return redirect('employee_details',eid) 
 
+def deleteloan(request,eid):
+    cmp1 = company.objects.get(id=request.session["uid"])
+    employee = EmployeeLoan.objects.get(id=eid,company=request.session["uid"])
+    employee.delete()
+    return redirect('employeeloanpage')      
 
+def loan_add_file(request,id):
+    cmp1 = company.objects.get(id=request.session['uid'])
+    loan = EmployeeLoan.objects.get(id=id,company=cmp1)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    if request.method == 'POST':
+        
+        if len(request.FILES) != 0:
+           
+            if loan.File != "default.jpg":
+                 os.remove(loan.File.path)
+    
+            loan.File=request.FILES['file']
+        loan.save()
+        return redirect('employee_details',id)

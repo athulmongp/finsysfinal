@@ -116,6 +116,7 @@
                   <li><a href="{% url 'godash' %}">Dashboard</a></li>
                   <li><a href="{% url 'goitem' %}">Item</a></li>
                   <li><a href="{% url 'goonlinebank' %}">Online Banking</a></li>
+                  <li><a href="{% url 'goofflinebank' %}">Offline Banking</a></li>
                     <li><a href="{% url 'gobankrecon' %}">Bank Reconcilation</a></li>
                       <li><a href="{% url 'gosalesrecords' %}">Sales Records</a></li>
                         <li><a href="{% url 'goinvoices' %}">Invoices</a></li>
@@ -131,8 +132,6 @@
                                             <li><a href="{% url 'govendor' %}">Vendor</li>
                                               <li><a href="{% url 'gopurchaseorder' %}">Purchase Order</li>
                                               <li><a href="{% url 'gobilling' %}">Bill</li>
-                                                <li><a href="{% url 'cash_in_hand' %}">Cash In Hand</a></li>
-                                                <li><a href="{% url 'bnnk' %}">Offline Banking</a></li>
 
         
                  </ul>
@@ -303,7 +302,7 @@
               <a href="javascript:;" class="has-arrow">
                 <div class="parent-icon"><i class="bx bx-home-alt"></i>
                 </div>
-                <div class="menu-title">Cash&Bank</div>
+                <div class="menu-title">Banking</div>
               </a>
               <ul>
                 <!-- <li><a href="{% url 'goonlinebank' %}"><i class="bx bx-right-arrow-alt"></i>Online
@@ -315,11 +314,9 @@
                 <li><a href="{% url 'gobankrecon' %}"><i class="bx bx-right-arrow-alt"></i>Bank
                     Reconcilation</a>
                 </li>
-                <li><a href="{% url 'cash_in_hand' %}"><i class="bx bx-right-arrow-alt"></i>Cash
-                  In Hand</a>
+                <li><a href="{% url 'bank_account_holder_list' %}"><i class="bx bx-right-arrow-alt"></i>Bank
+                  Holders</a>
               </li>
-              <li><a href=""><i class="bx bx-right-arrow-alt"></i>Loan Account</a>
-            </li>
               </ul>
             </li>
             <li>
@@ -425,22 +422,15 @@
                 <div class="menu-title">Reports</div>
               </a>
               <ul>
-                <li>
-                  <a><i class="bx bx-right-arrow-alt"></i>GST Reports</a>
-                  <ul class="px-4">
-                    <li><a href="{% url 'gstrr1' %}">GSTR-1</a></li>
-                    <li><a href="{% url 'gstr2' %}">GSTR-2</a></li>
-                    <li><a href="{% url 'gstr3b' %}">GSTR-3B</a></li>
-                    <li><a href="{% url 'gstr9' %}">GSTR-9</a></li>
-                    <li><a href="">Sale Summary by HSN</a></li>
-                  </ul>
-                </li>
                 <li><a href="{% url 'profitandloss' %}"><i class="bx bx-right-arrow-alt"></i>Profit and Loss</a></li>
                 <li><a href="{% url 'balancesheet1' %}"><i class="bx bx-right-arrow-alt"></i>Balance Sheet</a></li>
                 <li><a href="{% url 'trial_balance' %}"><i class="bx bx-right-arrow-alt"></i>Trial Balance</a></li>
                 <li><a href="{% url 'accreceivables' %}"><i class="bx bx-right-arrow-alt"></i>Accounts Receivables</a></li>
                 <li><a href="{% url 'accpayables' %}"><i class="bx bx-right-arrow-alt"></i>Accounts Payables</a></li>
-                
+                <li><a href="{% url 'gstr3b' %}"><i class="bx bx-right-arrow-alt"></i>GSTR-3B</a></li>
+                <li><a href="{% url 'gstrr1' %}"><i class="bx bx-right-arrow-alt"></i>GSTR-1</a></li>
+                <li><a href="{% url 'gstr2' %}"><i class="bx bx-right-arrow-alt"></i>GSTR-2</a></li>
+                <li><a href="{% url 'gstr9' %}"><i class="bx bx-right-arrow-alt"></i>GSTR-9</a></li>
                 <li><a href="{% url 'stocksummary' %}"><i class="bx bx-right-arrow-alt"></i>Stock Summary </a></li>
                 <li><a href="{% url 'stockvaluation' %}"><i class="bx bx-right-arrow-alt"></i>Stock Valuation</a></li>
               </ul>
