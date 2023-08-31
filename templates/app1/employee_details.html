@@ -302,120 +302,87 @@
                             </div>
 
                             <hr class="my-4">
-                            <div class="card-body">
-                                <div class="card-title">
-                                    <div class="row">
-                                        <div class="col mt-3">
-                                            <h4 class="mb-0">Personal Information</h4>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <hr />
-                                <div class="row">
-                                    <div class="col-md-4 mt-3">
-                                        <label for="title">
-                                            <h6>Date Of Birth : </h6>
-                                        </label>
-                                        <label for="title">{{ employee.employee.dateofbirth }}</label>
-
-                                    </div>
-                                    <div class="col-md-4 mt-3 vl">
-                                        <label for="title">
-                                            <h6>Blood Group : </h6>
-                                        </label>
-                                        <label for="title">{{ employee.employee.bloodgroup }}</label>
-
-                                    </div>
-                                    <div class="col-md-4 mt-3 vl">
-                                        <label for="title">
-                                            <h6>Gender : </h6>
-                                        </label>
-                                        <label for="title">{{ employee.employee.gender }}</label>
-
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-4 mt-3">
-                                        <label for="title">
-                                            <h6>Father's/Mother's Name : </h6>
-                                        </label>
-                                        <label for="title">{{ employee.employee.fathersmothersname }}</label>
-
-                                    </div>
-                                    <div class="col-md-4 mt-3 vl">
-                                        <label for="title">
-                                            <h6>Spouse Name : </h6>
-                                        </label>
-                                        <label for="title">{{ employee.employee.spousename }}</label>
-
-                                    </div>
-                                    <div class="col-md-4 mt-3 vl">
-                                        <label for="title">
-                                            <h6>Emergency Contact No: </h6>
-                                        </label>
-                                        <label for="title">{{ employee.employee.generalphone }}</label>
-
-                                    </div>
-                                </div>
-
-                            </div>
+                            
 
                             <div class="card-body">
                                 <div class="card-title">
                                     <div class="row">
                                         <div class="col mt-3">
-                                            <h4 class="mb-0">Loan Details</h4>
+                                            <h2 class="mb-0 text-center">Loan Details</h2>
                                         </div>
                                     </div>
 
                                 </div>
-                                <hr />
+                                <hr>
                                 <div class="row">
-                                    <div class="col-md-4 mt-3">
-                                        <label for="title">
-                                            <h6>Loan Amount : </h6>
+                                    <div class="col-md-4 ml-5 mr-5 mt-3">
+                                        <label for="title ">
+                                            <h6><b>Loan Amount </b></h6>
                                         </label>
-                                        <label for="title">{{ employee.LoanAmount }}</label>
+                                    </div>    
+                                    <div class="col-md-4 ml-5 mt-3">    
+                                        <label for="title"><b>: {{ employee.LoanAmount }}</b></label>
 
                                     </div>
-                                    <div class="col-md-4 mt-3 vl">
+                                </div> 
+                                <hr>   
+                                <div class="row">    
+                                    <div class="col-md-4 ml-5  mr-5 mt-3">
                                         <label for="title">
-                                            <h6>Loan Date : </h6>
+                                            <h6><b>Loan Date </b></h6>
                                         </label>
-                                        <label for="title">{{ employee.LoanDate }}</label>
+                                    </div>    
+                                    <div class="col-md-4 ml-5 mt-3">     
+                                        <label for="title"><b>: {{ employee.LoanDate }}</b></label>
 
                                     </div>
-                                    <div class="col-md-4 mt-3 vl">
+                                </div>  
+                                <hr>  
+                                <div class="row">    
+                                    <div class="col-md-4 ml-5 mr-5 mt-3">
                                         <label for="title">
-                                            <h6>Expery Date : </h6>
+                                            <h6><b>Expery Date</b> </h6>
                                         </label>
-                                        <label for="title">{{ employee.ExperyDate }}</label>
+                                    </div>    
+                                    <div class="col-md-4 ml-5 mt-3">    
+                                        <label for="title"><b>: {{ employee.ExperyDate }}</b></label>
 
                                     </div>
                                 </div>
+                                <hr>
 
                                 <div class="row">
-                                    <div class="col-md-4 mt-3">
+                                    <div class="col-md-4 ml-5 mr-5 mt-3">
                                         <label for="title">
-                                            <h6>MonthlyCuting(%) : </h6>
+                                            <h6><b>MonthlyCuting(%) </b></h6>
                                         </label>
-                                        <label for="title">{{ employee.MonthlyCut_percentage }}</label>
+                                    </div>    
+                                    <div class="col-md-4 ml-5 mt-3">     
+                                        <label for="title"><b>: {{ employee.MonthlyCut_percentage }}</b></label>
 
                                     </div>
-                                    <div class="col-md-4 mt-3 vl">
+                                </div>  
+                                <hr>  
+                                <div class="row">       
+                                    <div class="col-md-4 ml-5 mr-5 mt-3">
                                         <label for="title">
-                                            <h6>MonthlyCuting(Rs) : </h6>
+                                            <h6><b>MonthlyCuting(Rs) </b></h6>
                                         </label>
-                                        <label for="title">{{ employee.MonthlyCut_Amount }}</label>
+                                    </div>    
+                                    <div class="col-md-4 ml-5 mt-3">     
+                                        <label for="title"><b>: {{ employee.MonthlyCut_Amount }}</b></label>
 
                                     </div>
-                                    <div class="col-md-4 mt-3 vl">
+                                </div>   
+                                <hr> 
+                                <div class="row">       
+                                    <div class="col-md-4 ml-5 mr-5 mt-3">
                                         <label for="title">
-                                            <h6>Loan Status : </h6>
+                                            <h6><b>Loan Status </b></h6>
                                         </label>
-                                        <label for="title">{{ employee.status }}</label>
+                                    </div>    
+                                    <div class="col-md-4 ml-5 mt-3">     
+                                        <label for="title"><b>: {{ employee.status }}</b></label>
 
                                     </div>
 
@@ -423,128 +390,9 @@
 
                             </div>
 
-                            <div class="card-body">
-                                <div class="card-title">
-                                    <div class="row">
-                                        <div class="col mt-3">
-                                            <h4 class="mb-0">Bank Details</h4>
-                                        </div>
-                                    </div>
+                            
 
-                                </div>
-                                <hr />
-                                <div class="row">
-                                    <div class="col-md-4 mt-3">
-                                        <label for="title">
-                                            <h6>PAN No : </h6>
-                                        </label>
-                                        <label for="title">{{ employee.employee.pannumber }}</label>
-
-                                    </div>
-                                    <div class="col-md-4 mt-3 vl">
-                                        <label for="title">
-                                            <h6>Aadhaar No : </h6>
-                                        </label>
-                                        <label for="title">{{ employee.employee.adharnumber }}</label>
-
-                                    </div>
-                                    <div class="col-md-4 mt-3 vl">
-                                        <label for="title">
-                                            <h6>Universal Account No : </h6>
-                                        </label>
-                                        <label for="title">{{ employee.employee.universalaccountnumber }}</label>
-
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-4 mt-3">
-                                        <label for="title">
-                                            <h6>PF Account No : </h6>
-                                        </label>
-                                        <label for="title">{{ employee.employee.pfaccountnumber }}</label>
-
-                                    </div>
-                                    <div class="col-md-4 mt-3 vl">
-                                        <label for="title">
-                                            <h6>PR Account No : </h6>
-                                        </label>
-                                        <label for="title">{{ employee.employee.praccountnumber }}</label>
-
-                                    </div>
-                                    <div class="col-md-4 mt-3 vl">
-                                        <label for="title">
-                                            <h6>ESI No : </h6>
-                                        </label>
-                                        <label for="title">{{ employee.esinumber }}</label>
-
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="card-body">
-                                <div class="card-title">
-                                    <div class="row">
-                                        <div class="col mt-3">
-                                            <h4 class="mb-0">Permanant Address</h4>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <hr />
-                                <div class="row">
-                                    <div class="col-md-8 mt-3">
-                                        <label for="title">
-                                            <h6>Street : </h6>
-                                        </label>
-                                        <label for="title">{{ employee.employee.street }}</label>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4 mt-3">
-                                        <label for="title">
-                                            <h6>City : </h6>
-                                        </label>
-                                        <label for="title">{{ employee.employee.city }}</label>
-
-                                    </div>
-                                    <div class="col-md-4 mt-3 vl">
-                                        <label for="title">
-                                            <h6>State : </h6>
-                                        </label>
-                                        <label for="title">{{ employee.employee.state }}</label>
-
-                                    </div>
-                                    <div class="col-md-4 mt-3 vl">
-                                        <label for="title">
-                                            <h6>Country : </h6>
-                                        </label>
-                                        <label for="title">{{ employee.employee.country }}</label>
-
-                                    </div>
-
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4 mt-3">
-                                        <label for="title">
-                                            <h6>Pincode : </h6>
-                                        </label>
-                                        <label for="title">{{ employee.employee.pincode }}</label>
-
-                                    </div>
-                                    <div class="col-md-4 mt-3">
-
-
-                                    </div>
-                                    <div class="col-md-4 mt-3">
-
-
-                                    </div>
-
-                                </div>
-                            </div>
-
+                            
                         </div>
                     </div>
                     <div class="col-lg-4 bg-grey">
