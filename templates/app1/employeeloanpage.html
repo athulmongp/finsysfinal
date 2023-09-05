@@ -144,7 +144,7 @@
                                     <th style="text-align: center; text-transform: uppercase;">Loan Date</th>
                      
                                     <th style="text-align: center; text-transform: uppercase;">Employee Name</th>
-                                    <th style="text-align: center; text-transform: uppercase;">Employee Id</th>
+                                    <th style="text-align: center; text-transform: uppercase;">Employee No</th>
                                     <th style="text-align: center; text-transform: uppercase;">Email Id</th>
                                     <th style="text-align: center; text-transform: uppercase;">Expery Date</th>
                                     <th style="text-align: center; text-transform: uppercase;">Loan Amount</th>
@@ -158,7 +158,7 @@
                                             <td style="text-align: center;"><a class="idsr" style="list-style: none;"  href="{% url 'employee_details'  emp.id  %}"> {{ emp.LoanDate }}</a></td>
                                             
                                             <td style="text-align: center;"><a class="idsr" style="list-style: none;"  href="{% url 'employee_details'  emp.id  %}"> {{ emp.employee.firstname }} {{ emp.employee.lastname }}</a></td>
-                                            <th style="text-align: center;"><a class="idsr" style="list-style: none;"  href="{% url 'employee_details'  emp.id  %}"> {{ emp.employee.employeeid }}</a></th>
+                                            <th style="text-align: center;"><a class="idsr" style="list-style: none;"  href="{% url 'employee_details'  emp.id  %}"> {{ emp.employee.employeeno }}</a></th>
                                             <td style="text-align: center;"><a class="idsr" style="list-style: none;"  href="{% url 'employee_details'  emp.id  %}"> {{ emp.employee.email }}</a></td>
                                             <td style="text-align: center;"><a class="idsr" style="list-style: none;"  href="{% url 'employee_details'  emp.id  %}">{{ emp.ExperyDate }}</a></td>
                                             <td style="text-align: center;"><a class="idsr" style="list-style: none;"  href="{% url 'employee_details'  emp.id  %}">{{ emp.LoanAmount }}</a></td>

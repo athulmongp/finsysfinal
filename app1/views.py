@@ -41326,13 +41326,13 @@ def listemployee_loan(request):
         id = request.POST.get('id').split(" ")[0]
         cust = payrollemployee.objects.get(employeeid = id, cid = request.session['uid'])
         email = cust.email
-        employeeid = cust.employeeid
+        employeeno = cust.employeeno
         city = cust.city
         joindate = cust.joindate
         amount = cust.amount
         country = cust.country
        
-    return JsonResponse({'email': email,'employeeid': employeeid,'joindate':joindate,'amount': amount},safe=False)
+    return JsonResponse({'email': email,'employeeno': employeeno,'joindate':joindate,'amount': amount},safe=False)
 
 
 def newemployeeloan(request):
@@ -41349,13 +41349,25 @@ def addemployeeloan(request):
         loandate = request.POST['loandate'] 
         experydate = request.POST['experydate']
         cuttingPercentage = request.POST['cuttingPercentage']
-        cuttinamount = request.POST['cuttinamount']
-        ca = ((int(cuttingPercentage)/100)*int(Loan_Amound))
-        file = request.FILES['file']
+        cuttinamount = request.POST['Cutingamount']
+        try:
+            file = request.FILES['file']
+        except:
+            file = '' 
         Note = request.POST['Note']
 
-        data=EmployeeLoan(employee=employee,LoanAmount=Loan_Amound,LoanDate=loandate,ExperyDate=experydate,MonthlyCut_percentage=cuttingPercentage,MonthlyCut_Amount=ca,Note=Note,File=file,company=cmpy,status='Active')
+        data=EmployeeLoan(employee=employee,LoanAmount=Loan_Amound,LoanDate=loandate,ExperyDate=experydate,Note=Note,File=file,company=cmpy,status='Active')
+
+        if int(cuttingPercentage)==0 and int(cuttinamount)!=0:
+            data.MonthlyCut_Amount=cuttinamount
+            data.MonthlyCut_percentage=((int(cuttinamount)/int(Loan_Amound))*100)          
+        else: 
+            data.MonthlyCut_percentage= cuttingPercentage  
+            data.MonthlyCut_Amount = ((int(cuttingPercentage)/100)*int(Loan_Amound)) 
+            
+           
         data.save()
+        
     return redirect('employeeloanpage')
 
 def AddEmployeeInloanPage(request):
@@ -41500,8 +41512,8 @@ def editloan_action(request,eid):
     loandate = request.POST['loandate'] 
     experydate = request.POST['experydate']
     cuttingPercentage = request.POST['cuttingPercentage']
-    cuttinamount = request.POST['cuttinamount']
-    ca = ((int(cuttingPercentage)/100)*int(Loan_Amount))
+    cuttinamount = request.POST['cp']
+   
     
     Note = request.POST['Note']
 
@@ -41512,12 +41524,26 @@ def editloan_action(request,eid):
     else:
         employee.File=new
 
+    oldper=employee.MonthlyCut_percentage    
+    oldca=employee.MonthlyCut_Amount
+
+    if oldca!=cuttinamount:
+        employee.MonthlyCut_percentage=((int(cuttinamount)/int(Loan_Amount))*100)
+        employee.MonthlyCut_Amount=cuttinamount
+    elif oldper!=cuttingPercentage:
+        employee.MonthlyCut_percentage= cuttingPercentage
+        employee.MonthlyCut_Amount = ((int(cuttingPercentage)/100)*int(Loan_Amount))
+    else:
+        employee.MonthlyCut_percentage= cuttingPercentage
+        employee.MonthlyCut_Amount=cuttinamount
+
+
     employee.LoanAmount = Loan_Amount
     employee.LoanDate = loandate
     employee.ExperyDate = experydate
-    employee.MonthlyCut_percentage = cuttingPercentage
-    employee.MonthlyCut_Amount = ca
+    
     employee.Note = Note
+    
     employee.save()    
     return redirect('employee_details',eid) 
 

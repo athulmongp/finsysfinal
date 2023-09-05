@@ -218,466 +218,545 @@
 
 
 <div class="page-content ">
-    <div class="card radius-15">
-        <div class="card-body">
-            <div class="card-title">
-                <center>
-
-                    <h2 class="mb-0">{{ employee.employee.title }}. {{ employee.employee.firstname }} 
-                        {{employee.employee.lastname }}</h2>
-
-                </center>
-                <hr>
-                <div class="btn-group" style="float: left; ">
 
 
-                    <a style="padding: 10px; cursor: pointer;" onclick="Overview()"> Overview</a>
+    <div id="overview">
+        <div class="card radius-15">
+            <div class="card-body">
+                <div class="card-title">
+                    <center>
 
-                    <a style="padding: 10px; cursor: pointer;" onclick="Statment()"> Statement</a>
+                        <h2 class="mb-0">{{ employee.employee.title }}. {{ employee.employee.firstname }}
+                            {{employee.employee.lastname }}</h2>
+
+                    </center>
+                    <hr>
+                    <div class="btn-group" style="float: left; ">
+
+
+                        <a style="padding: 10px; cursor: pointer;" onclick="Overview()"> Overview</a>
+
+                        <a style="padding: 10px; cursor: pointer;" onclick="Statment()"> Statement</a>
+                    </div>
+                    <div class="btn-group" style="float: right; ">
+
+
+
+                        <div>
+                            <center>
+
+                                <a href="{% url 'editloan' employee.id %}"
+                                    class=" fa fa-pencil btn btn-outline-info rounded-pill text-grey mt-3 mb-3"
+                                    role="button">
+                                    Edit
+                                </a>&nbsp;&nbsp;&nbsp;
+                                {% if employee.status == "Active" %}
+                                <a href="{% url 'inactive_loan' employee.id  %}"
+                                    class="fa fa-check btn btn-outline-info rounded-pill text-grey mt-3 mb-3"
+                                    role="button">Activate</a> &nbsp;&nbsp;&nbsp;
+                                {% else %}
+                                <a href="{% url 'active_loan' employee.id  %}"
+                                    class=" fa fa-exclamation-triangle  btn btn-outline-info rounded-pill text-grey mt-3 mb-3"
+                                    role="button">Inactivate</a> &nbsp;&nbsp;&nbsp;
+                                {% endif %}
+
+                                <a href="{% url 'deleteloan' employee.id %}"
+                                    class=" fa fa-trash btn btn-outline-info rounded-pill text-grey mt-3 mb-3"
+                                    role="button"> Delete</a>
+
+                                <button type="button"
+                                    class="btn btn-outline-info rounded-pill text-grey mt-3 mb-3 ml-3   fa fa-paperclip"
+                                    style="cursor: pointer;" data-toggle="modal" data-target="#exampleModal">
+
+                                    Attach file
+                                </button>
+                                <!-- <a data-toggle="modal"
+                                    class=" fa fa-download btn btn-outline-info rounded-pill text-grey mt-3 mb-3"
+                                    data-target="#commentModal"> Download</a> -->
+
+
+
+
+                            </center>
+                        </div>
+
+
+                    </div>
                 </div>
-                <div class="btn-group" style="float: right; ">
+            </div>
+        </div>
+
+        <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+            <div class="card-body p-0">
+
+                <div id="details">
+                    <div class="row g-0">
+
+                        <div class="col-lg-8">
+                            <div class="p-5">
+
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h1 class="fw-bold mb-0 text-black">{{ employee.employee.title }}.
+                                        {{employee.employee.firstname }} {{ employee.employee.lastname }}</h1>
+                                    <img src="{{ employee.employee.image.url }}"
+                                        style="width: 15%; height: 97px; border-radius: 50px">
+                                </div>
+
+                                <hr class="my-4">
+
+
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        <div class="row">
+                                            <div class="col mt-3">
+                                                <h2 class="mb-0 text-center">Loan Details</h2>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-4 ml-5 mr-5 mt-3">
+                                            <label for="title">
+                                                <h6><b>Loan Status </b></h6>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4 ml-5 mt-3">
+                                            <label for="title"><b>: {{ employee.status }}</b></label>
+
+                                        </div>
+
+                                    </div>
+                                    <hr>
+
+                                    <div class="row">
+                                        <div class="col-md-4 ml-5 mr-5 mt-3">
+                                            <label for="title ">
+                                                <h6><b>Loan Amount </b></h6>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4 ml-5 mt-3">
+                                            <label for="title"><b>: {{ employee.LoanAmount }}</b></label>
+
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-4 ml-5  mr-5 mt-3">
+                                            <label for="title">
+                                                <h6><b>Loan Date </b></h6>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4 ml-5 mt-3">
+                                            <label for="title"><b>: {{ employee.LoanDate }}</b></label>
+
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-4 ml-5 mr-5 mt-3">
+                                            <label for="title">
+                                                <h6><b>Expery Date</b> </h6>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4 ml-5 mt-3">
+                                            <label for="title"><b>: {{ employee.ExperyDate }}</b></label>
+
+                                        </div>
+                                    </div>
+                                    <hr>
+
+                                    <div class="row">
+                                        <div class="col-md-4 ml-5 mr-5 mt-3">
+                                            <label for="title">
+                                                <h6><b>MonthlyCuting (%) </b></h6>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4 ml-5 mt-3">
+                                            <label for="title"><b>: {{ employee.MonthlyCut_percentage }}</b></label>
+
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-4 ml-5 mr-5 mt-3">
+                                            <label for="title">
+                                                <h6><b>MonthlyCuting (INR) </b></h6>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4 ml-5 mt-3">
+                                            <label for="title"><b>: {{ employee.MonthlyCut_Amount }}</b></label>
+
+                                        </div>
+                                    </div>
+                                    <hr>
+
+                                </div>
 
 
 
-                    <div>
-                        <center>
 
-                            <a href="{% url 'editloan' employee.id %}"
-                                class=" fa fa-pencil btn btn-outline-info rounded-pill text-grey mt-3 mb-3"
-                                role="button">
-                                Edit
-                            </a>&nbsp;&nbsp;&nbsp;
-                            {% if employee.status == "Active" %}
-                            <a href="{% url 'inactive_loan' employee.id  %}"
-                                class=" fa fa-exclamation-triangle btn btn-outline-info rounded-pill text-grey mt-3 mb-3"
-                                role="button"> Inactivate</a> &nbsp;&nbsp;&nbsp;
-                            {% else %}
-                            <a href="{% url 'active_loan' employee.id  %}"
-                                class=" fa fa-check btn btn-outline-info rounded-pill text-grey mt-3 mb-3"
-                                role="button">Activate</a> &nbsp;&nbsp;&nbsp;
-                            {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-lg-4 bg-grey">
+                            <div class="p-5">
 
-                            <a href="{% url 'deleteloan' employee.id %}"
-                                class=" fa fa-trash btn btn-outline-info rounded-pill text-grey mt-3 mb-3"
-                                role="button"> Delete</a>
+                                <h3 class="fw-bold mb-2 mt-2 pt-1">Employee Details</h3>
+                                <hr class="my-4">
+                                <div class="d-flex justify-content-between mb-4">
+                                    <h6 class="">Status</h6>
+                                    {{ employee.employee.status }}
+                                </div>
+                                <div class="d-flex justify-content-between mb-4">
+                                    <h6 class="">Designation</h6>
+                                    {{ employee.employee.designation }}
+                                </div>
+                                <div class="d-flex justify-content-between mb-4">
+                                    <h6 class="">Employee No:</h6>
+                                    {{ employee.employee.employeeno }}
+                                </div>
+                                <div class="d-flex justify-content-between mb-4">
+                                    <h6 class="">Function</h6>
+                                    {{ employee.employee.function }}
+                                </div>
 
-                            <button type="button"
-                                class="btn btn-outline-info rounded-pill text-grey mt-3 mb-3 ml-3   fa fa-paperclip"
-                                style="cursor: pointer;" data-toggle="modal" data-target="#exampleModal">
+                                <div class="d-flex justify-content-between mb-4">
+                                    <h6 class="">Date Of Joining</h6>
+                                    {{ employee.employee.joindate }}
+                                </div>
 
-                                Attach file
-                            </button>
-                            <!-- <a data-toggle="modal"
+                                <div class="d-flex justify-content-between mb-4">
+                                    <h6 class="">Contact</h6>
+                                    {{ employee.employee.mobile }}
+                                </div>
+                                <div class="d-flex justify-content-between mb-4">
+                                    <h6 class="">Email</h6>
+                                    {{ employee.employee.email }}
+                                </div>
+                                {% if employee.salarydetails == "Yes"%}
+                                <h3 class="fw-bold mb-2 mt-2 pt-1">Salary Details</h3>
+                                <hr class="my-4">
+
+
+
+                                <div class="d-flex justify-content-between mb-4">
+                                    <h6 class="">Employee Type</h6>
+                                    {{ employee.employee.employees }}
+                                </div>
+
+                                <div class="d-flex justify-content-between mb-4">
+                                    <h6 class="">Salary Effective From</h6>
+                                    {{ employee.employee.effectivefrom }}
+                                </div>
+                                <div class="d-flex justify-content-between mb-4">
+                                    <h6 class="">Pay Head</h6>
+                                    {{ employee.employee.payhead }}
+                                </div>
+                                {% if employee.employees == "Timebased"%}
+                                <div class="d-flex justify-content-between mb-4">
+                                    <h6 class="">Hours</h6>
+                                    {{ employee.employee.hours }}
+                                </div>
+                                <div class="d-flex justify-content-between mb-4">
+                                    <h6 class="">Rate</h6>
+                                    {{ employee.employee.rate }}
+                                </div>
+                                {% endif %}
+                                <div class="d-flex justify-content-between mb-4">
+                                    <h6 class="">Amount</h6>
+                                    {{ employee.employee.amount }}
+                                </div>
+
+                                {% endif %}
+
+
+                                <!-- <h3 class="fw-bold mb-2 mt-2 pt-1"> Bank Account Details</h3>
+                                <hr class="my-4">
+                                <div class="d-flex justify-content-between mb-4">
+                                    <h6 class="">Transaction Type</h6>
+                                    {{ employee.employee.transactiontype }}
+                                </div>
+    
+                                {% if employee.bankdetails == "Yes"%}
+                                <div class="d-flex justify-content-between mb-4">
+                                    <h6 class="">A/C No:</h6>
+                                    {{ employee.employee.acno }}
+                                </div>
+    
+                                <div class="d-flex justify-content-between mb-4">
+                                    <h6 class="">IFSC Code</h6>
+                                    {{ employee.employee.ifsccode }}
+                                </div>
+                                <div class="d-flex justify-content-between mb-4">
+                                    <h6 class="">Bank Name</h6>
+                                    {{ employee.employee.bankname }}
+                                </div>
+                                <div class="d-flex justify-content-between mb-4">
+                                    <h6 class="">Branch Name</h6>
+                                    {{ employee.employee.branchname }}
+                                </div>
+    
+                                {% endif %}
+                                {% if employee.bankdetails == "Unknown"%}
+                                <div class="d-flex justify-content-between mb-4">
+                                    <h6 class="">Bank Details</h6>
+                                    {{ employee.employee.bankdetails }}
+                                </div>
+                                {% endif %}
+    
+                                {% if employee.istds == "Yes"%}
+                                <div class="d-flex justify-content-between mb-4">
+                                    <h6 class="">TDS Type</h6>
+                                    {{ employee.employee.tdstype }}
+                                </div>
+                                <div class="d-flex justify-content-between mb-4">
+                                    <h6 class="">TDS Amount</h6>
+                                    {{ employee.employee.tds }}
+                                </div>
+                                {% endif %}
+     -->
+
+
+
+
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="statment" style="display: none; ">
+        <div class="card radius-15 ">
+            <div class="card-body">
+                <div class="card-title">
+                    <center>
+
+                        <h2 class="mb-0">{{ employee.employee.title }}. {{ employee.employee.firstname }}
+                            {{employee.employee.lastname }}</h2>
+
+                    </center>
+                    <hr>
+                    <div class="btn-group" style="float: left; ">
+
+
+                        <a style="padding: 10px; cursor: pointer;" onclick="Overview()"> Overview</a>
+
+                        <a style="padding: 10px; cursor: pointer;" onclick="Statment()"> Statement</a>
+                    </div>
+                    <div class="btn-group" style="float: right; ">
+
+
+
+                        <div>
+                            <center>
+
+                                <a href="{% url 'editloan' employee.id %}"
+                                    class=" fa fa-pencil btn btn-outline-info rounded-pill text-grey mt-3 mb-3"
+                                    role="button">
+                                    Edit
+                                </a>&nbsp;&nbsp;&nbsp;
+                                {% if employee.status == "Active" %}
+                                <a href="{% url 'inactive_loan' employee.id  %}"
+                                    class="fa fa-check btn btn-outline-info rounded-pill text-grey mt-3 mb-3"
+                                    role="button">Activate</a> &nbsp;&nbsp;&nbsp;
+                                {% else %}
+                                <a href="{% url 'active_loan' employee.id  %}"
+                                    class=" fa fa-exclamation-triangle  btn btn-outline-info rounded-pill text-grey mt-3 mb-3"
+                                    role="button">Inactivate</a> &nbsp;&nbsp;&nbsp;
+                                {% endif %}
+
+                                <a href="{% url 'deleteloan' employee.id %}"
+                                    class=" fa fa-trash btn btn-outline-info rounded-pill text-grey mt-3 mb-3"
+                                    role="button"> Delete</a>
+
+                                <button type="button"
+                                    class="btn btn-outline-info rounded-pill text-grey mt-3 mb-3 ml-2   fa fa-paperclip"
+                                    style="cursor: pointer;" data-toggle="modal" data-target="#exampleModal">
+
+                                    Attach file
+                                </button>
+                                <a class="btn btn-outline-info rounded-pill text-grey mt-3 mb-3  ml-2 fa fa-download"
+                                href="javascript:generatePDF()" id="downloadButton">
+                                Download</a>
+                                <!-- <a data-toggle="modal"
                                 class=" fa fa-download btn btn-outline-info rounded-pill text-grey mt-3 mb-3"
                                 data-target="#commentModal"> Download</a> -->
 
-                            <a class="btn btn-outline-info rounded-pill text-grey mt-3 mb-3 ml-3   fa fa-print"
-                                href="javascript:generatePDF()" id="downloadButton"> Download</a>
 
 
-                        </center>
-                    </div>
 
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="card card-registration card-registration-2" id="overview" style="border-radius: 15px;">
-        <div class="card-body p-0">
-
-            <div id="details">
-                <div class="row g-0">
-
-                    <div class="col-lg-8">
-                        <div class="p-5">
-
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h1 class="fw-bold mb-0 text-black">{{ employee.employee.title }}. 
-                                    {{employee.employee.firstname }} {{ employee.employee.lastname }}</h1>
-                                <img src="{{ employee.employee.image.url }}"
-                                    style="width: 15%; height: 97px; border-radius: 50px">
-                            </div>
-
-                            <hr class="my-4">
-                            
-
-                            <div class="card-body">
-                                <div class="card-title">
-                                    <div class="row">
-                                        <div class="col mt-3">
-                                            <h2 class="mb-0 text-center">Loan Details</h2>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-md-4 ml-5 mr-5 mt-3">
-                                        <label for="title ">
-                                            <h6><b>Loan Amount </b></h6>
-                                        </label>
-                                    </div>    
-                                    <div class="col-md-4 ml-5 mt-3">    
-                                        <label for="title"><b>: {{ employee.LoanAmount }}</b></label>
-
-                                    </div>
-                                </div> 
-                                <hr>   
-                                <div class="row">    
-                                    <div class="col-md-4 ml-5  mr-5 mt-3">
-                                        <label for="title">
-                                            <h6><b>Loan Date </b></h6>
-                                        </label>
-                                    </div>    
-                                    <div class="col-md-4 ml-5 mt-3">     
-                                        <label for="title"><b>: {{ employee.LoanDate }}</b></label>
-
-                                    </div>
-                                </div>  
-                                <hr>  
-                                <div class="row">    
-                                    <div class="col-md-4 ml-5 mr-5 mt-3">
-                                        <label for="title">
-                                            <h6><b>Expery Date</b> </h6>
-                                        </label>
-                                    </div>    
-                                    <div class="col-md-4 ml-5 mt-3">    
-                                        <label for="title"><b>: {{ employee.ExperyDate }}</b></label>
-
-                                    </div>
-                                </div>
-                                <hr>
-
-                                <div class="row">
-                                    <div class="col-md-4 ml-5 mr-5 mt-3">
-                                        <label for="title">
-                                            <h6><b>MonthlyCuting(%) </b></h6>
-                                        </label>
-                                    </div>    
-                                    <div class="col-md-4 ml-5 mt-3">     
-                                        <label for="title"><b>: {{ employee.MonthlyCut_percentage }}</b></label>
-
-                                    </div>
-                                </div>  
-                                <hr>  
-                                <div class="row">       
-                                    <div class="col-md-4 ml-5 mr-5 mt-3">
-                                        <label for="title">
-                                            <h6><b>MonthlyCuting(Rs) </b></h6>
-                                        </label>
-                                    </div>    
-                                    <div class="col-md-4 ml-5 mt-3">     
-                                        <label for="title"><b>: {{ employee.MonthlyCut_Amount }}</b></label>
-
-                                    </div>
-                                </div>   
-                                <hr> 
-                                <div class="row">       
-                                    <div class="col-md-4 ml-5 mr-5 mt-3">
-                                        <label for="title">
-                                            <h6><b>Loan Status </b></h6>
-                                        </label>
-                                    </div>    
-                                    <div class="col-md-4 ml-5 mt-3">     
-                                        <label for="title"><b>: {{ employee.status }}</b></label>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            
-
-                            
+                            </center>
                         </div>
-                    </div>
-                    <div class="col-lg-4 bg-grey">
-                        <div class="p-5">
-
-                            <h3 class="fw-bold mb-2 mt-2 pt-1">Employee Details</h3>
-                            <hr class="my-4">
-                            <div class="d-flex justify-content-between mb-4">
-                                <h6 class="">Status</h6>
-                                {{ employee.employee.status }}
-                            </div>
-                            <div class="d-flex justify-content-between mb-4">
-                                <h6 class="">Designation</h6>
-                                {{ employee.employee.designation }}
-                            </div>
-                            <div class="d-flex justify-content-between mb-4">
-                                <h6 class="">Employee No:</h6>
-                                {{ employee.employee.employeeno }}
-                            </div>
-                            <div class="d-flex justify-content-between mb-4">
-                                <h6 class="">Function</h6>
-                                {{ employee.employee.function }}
-                            </div>
-
-                            <div class="d-flex justify-content-between mb-4">
-                                <h6 class="">Date Of Joining</h6>
-                                {{ employee.employee.joindate }}
-                            </div>
-
-                            <div class="d-flex justify-content-between mb-4">
-                                <h6 class="">Contact</h6>
-                                {{ employee.employee.mobile }}
-                            </div>
-                            <div class="d-flex justify-content-between mb-4">
-                                <h6 class="">Email</h6>
-                                {{ employee.employee.email }}
-                            </div>
-                            {% if employee.salarydetails == "Yes"%}
-                            <h3 class="fw-bold mb-2 mt-2 pt-1">Salary Details</h3>
-                            <hr class="my-4">
-
-
-
-                            <div class="d-flex justify-content-between mb-4">
-                                <h6 class="">Employee Type</h6>
-                                {{ employee.employee.employees }}
-                            </div>
-
-                            <div class="d-flex justify-content-between mb-4">
-                                <h6 class="">Salary Effective From</h6>
-                                {{ employee.employee.effectivefrom }}
-                            </div>
-                            <div class="d-flex justify-content-between mb-4">
-                                <h6 class="">Pay Head</h6>
-                                {{ employee.employee.payhead }}
-                            </div>
-                            {% if employee.employees == "Timebased"%}
-                            <div class="d-flex justify-content-between mb-4">
-                                <h6 class="">Hours</h6>
-                                {{ employee.employee.hours }}
-                            </div>
-                            <div class="d-flex justify-content-between mb-4">
-                                <h6 class="">Rate</h6>
-                                {{ employee.employee.rate }}
-                            </div>
-                            {% endif %}
-                            <div class="d-flex justify-content-between mb-4">
-                                <h6 class="">Amount</h6>
-                                {{ employee.employee.amount }}
-                            </div>
-
-                            {% endif %}
-
-
-                            <h3 class="fw-bold mb-2 mt-2 pt-1"> Bank Account Details</h3>
-                            <hr class="my-4">
-                            <div class="d-flex justify-content-between mb-4">
-                                <h6 class="">Transaction Type</h6>
-                                {{ employee.employee.transactiontype }}
-                            </div>
-
-                            {% if employee.bankdetails == "Yes"%}
-                            <div class="d-flex justify-content-between mb-4">
-                                <h6 class="">A/C No:</h6>
-                                {{ employee.employee.acno }}
-                            </div>
-
-                            <div class="d-flex justify-content-between mb-4">
-                                <h6 class="">IFSC Code</h6>
-                                {{ employee.employee.ifsccode }}
-                            </div>
-                            <div class="d-flex justify-content-between mb-4">
-                                <h6 class="">Bank Name</h6>
-                                {{ employee.employee.bankname }}
-                            </div>
-                            <div class="d-flex justify-content-between mb-4">
-                                <h6 class="">Branch Name</h6>
-                                {{ employee.employee.branchname }}
-                            </div>
-
-                            {% endif %}
-                            {% if employee.bankdetails == "Unknown"%}
-                            <div class="d-flex justify-content-between mb-4">
-                                <h6 class="">Bank Details</h6>
-                                {{ employee.employee.bankdetails }}
-                            </div>
-                            {% endif %}
-
-                            {% if employee.istds == "Yes"%}
-                            <div class="d-flex justify-content-between mb-4">
-                                <h6 class="">TDS Type</h6>
-                                {{ employee.employee.tdstype }}
-                            </div>
-                            <div class="d-flex justify-content-between mb-4">
-                                <h6 class="">TDS Amount</h6>
-                                {{ employee.employee.tds }}
-                            </div>
-                            {% endif %}
-
-
-
-
-
-
-                        </div>
-
 
 
                     </div>
                 </div>
             </div>
-
         </div>
 
 
 
+        <div class="container-fluid">
 
 
 
+            <div class="py-5">
+
+
+                <div class="row hidden-md-up" style="margin-top: 15px;">
+                    <div class="col-md-7" style="margin: auto;">
+                        <div class="card">
+                            
+
+                            <div id="whatToPrint">
+                                <div class="card-block">
+                                    <div class="card-body">
+                                        <div class="container bootdey">
+                                            <div class="row">
+                                                <div class="col-sm-12 col-sm-offset-1" style="padding:20px;">
+                                                    <div class="widget-box">
+                                                        <div class="widget-header widget-header-large">
+                                                            <center>
+                                                                <h3 class="widget-title mt-5 mb-3">
+                                                                    STATEMENT OF LOAN<br></h3>
+                                                            </center>
 
 
 
+                                                        </div>
 
+                                                        <div class="widget-body">
+                                                            <div class="widget-main padding-24">
+                                                                <div class="row" style="padding:20px;">
+                                                                    <div class="col-sm-12">
+                                                                        <div class="col-6 ml-3 mt-3">
+                                                                            <div style="width:20%;">
+                                                                                <img src="{{cmp1.cimg.url}}"
+                                                                                    class="rounded-pill"
+                                                                                    style="width: 60%;  border-radius: 50px">
+                                                                            </div>
 
-
-
-
-
-
-
-
-
-
-
-    </div>
-
-</div>
-
-
-
-
-
-
-</div>
-</div>
-</div>
-
-
-
-
-<div id="statment" style="display: none;">
-
-
-
-    <div class="container-fluid">
-
-
-
-        <div class="py-5">
-
-
-            <div class="row hidden-md-up" style="margin-top: 15px;">
-                <div class="col-md-7" style="margin: auto;">
-                    <div class="card">
-                        <div id="whatToPrint">
-                            <div class="card-block">
-                                <div class="card-body">
-                                    <div class="container bootdey">
-                                        <div class="row">
-                                            <div class="col-sm-12 col-sm-offset-1" style="padding:20px;">
-                                                <div class="widget-box">
-                                                    <div class="widget-header widget-header-large">
-                                                        <center>
-                                                            <h3 class="widget-title mt-5 mb-3">
-                                                                Statement of Loan<br></h3>
-                                                        </center>
-
-
-
-                                                    </div>
-
-                                                    <div class="widget-body">
-                                                        <div class="widget-main padding-24">
-                                                            <div class="row" style="padding:20px;">
-                                                                <div class="col-sm-12">
-                                                                    <div class="col-6">
-                                                                        <div style="width:30px;">
-                                                                            <img src="/media/images/default.png">
                                                                         </div>
 
-                                                                    </div>
+                                                                        <div class="col-6 ml-3">
+                                                                            <p style="font-size:10px;color:black;">
+                                                                                {{cmp1.city}} <br>
+                                                                                {{cmp1.pincode}}<br>
+                                                                                {{cmp1.state}},India <br>
+                                                                                {{cmp1.cemail}}
+                                                                                <br>
+                                                                                {{cmp1.pincode}}<br>
+                                                                            </p>
 
-                                                                    <div class="col-6">
+                                                                        </div>
+                                                                        <hr>
+                                                                    </div><!-- /.col -->
+
+
+                                                                </div><!-- /.row -->
+
+                                                                <div class="row col-12">
+                                                                    <div class="col-6 ml-5" style="margin-left: 20px;">
                                                                         <p style="font-size:10px;color:black;">
-                                                                            {{cmp1.city}} <br>
-                                                                            {{cmp1.pincode}}<br>
-                                                                            {{cmp1.state}},India <br>
-                                                                            {{cmp1.cemail}}
+                                                                            To,<br>{{employee.employee.firstname}}
+                                                                            {{employee.employee.lastname}}<br>
+                                                                            {{employee.employee.street}},{{employee.employee.city}}<br>
+                                                                            {{employee.employee.state}},{{employee.employee.country}}<br>
+                                                                            {{employee.employee.pincode }}<br>
+                                                                            {{employee.employee.email}}
                                                                             <br>
-                                                                            {{cmp1.pincode}}<br>
+                                                                            {{employee.employee.phone}}<br>
                                                                         </p>
-
                                                                     </div>
-                                                                    <hr>
-                                                                </div><!-- /.col -->
-
-
-                                                            </div><!-- /.row -->
-
-                                                            <div class="row col-12">
-                                                                <div class="col-6" style="margin-left: 20px;">
-                                                                    <p style="font-size:10px;color:black;">
-                                                                        To,<br>{{employee.employee.firstname}}
-                                                                        {{employee.employee.lastname}}<br>
-                                                                        {{employee.employee.street}},{{employee.employee.city}}<br>
-                                                                        {{employee.employee.state}},{{employee.employee.country}}<br>
-                                                                        {{employee.employee.pincode }}<br>
-                                                                        {{employee.employee.email}}
-                                                                        <br>
-                                                                        {{employee.employee.phone}}<br>
-                                                                    </p>
                                                                 </div>
-
-                                                                <div class="col-md-12">
-                                                                    <table border="0" id="logic"
+                                                                <div class="row col-12">
+                                                                    <table id="logic"
                                                                         class=" table-striped table-responsive"
-                                                                        width="100%"
-                                                                        style="font-size:10px;color:black; margin-left: 20px; margin-bottom: 30px; margin-top: 40px;">
+                                                                        style="font-size:13px;color:black; margin-left: 40px; margin-bottom: 30px; margin-top: 40px; width: 100%;">
                                                                         <thead class="thead-dark">
                                                                             <tr>
-                                                                                <th style="padding: 20px;">Employee Id
+                                                                                <th style="padding: 10px;font-size: 10px;"><b>Loan
+                                                                                        Date</b>
                                                                                 </th>
-                                                                                <th style="padding: 20px;">Employee Name
+                                                                                <th style="padding: 10px;font-size: 10px;"><b>Employee
+                                                                                        Name</b>
                                                                                 </th>
-                                                                                <th style="padding: 20px;">Loan Date
+                                                                                <th style="padding: 10px;font-size: 10px;"><b>Employee
+                                                                                        No</b>
                                                                                 </th>
-                                                                                <th style="padding: 20px;">Loan Amount
+                                                                                <th style="padding: 10px;font-size: 10px;"><b>Email
+                                                                                        Id</b>
                                                                                 </th>
-                                                                                <th style="padding: 20px;">MonthlyCuting
+                                                                                <th style="padding: 10px;font-size: 10px;"><b>Loan
+                                                                                        Amount</b>
                                                                                 </th>
-                                                                                <th style="padding: 20px;">Expery Date
-                                                                                </th>
+
 
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
 
                                                                             <tr>
-                                                                                <td style="padding: 20px;">
-                                                                                    {{employee.employee.employeeid}}
+                                                                                <td style="padding: 10px;font-size: 10px;">
+                                                                                    {{employee.LoanDate}}
                                                                                 </td>
-                                                                                <td style="padding: 20px;">
+                                                                                <td style="padding: 10px;font-size: 10px;">
                                                                                     {{employee.employee.firstname}}
                                                                                     {{employee.employee.lastname}}</td>
-                                                                                <td style="padding: 20px;">
-                                                                                    {{employee.LoanDate}}</td>
-                                                                                <td style="padding: 20px;">
+
+                                                                                <td style="padding: 10px;font-size: 10px;">
+                                                                                    {{employee.employee.employeeno}}
+                                                                                </td>
+                                                                                <td
+                                                                                    style="padding: 10px; font-size: 10px;">
+                                                                                    {{employee.employee.email}}</td>
+                                                                                <td style="padding: 10px;font-size: 10px;">
                                                                                     {{employee.LoanAmount}}</td>
-                                                                                <td style="padding: 20px;">
-                                                                                    {{employee.MonthlyCut_Amount}}</td>
-                                                                                <td style="padding: 20px;">
-                                                                                    {{employee.ExperyDate}}</td>
+
                                                                             </tr>
 
 
+                                                                        </tbody>
+                                                                    </table>
 
                                                                 </div>
 
@@ -688,30 +767,35 @@
 
 
 
+
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+
+
+
                                             </div>
-
-
-
                                         </div>
                                     </div>
+
+
                                 </div>
 
-
                             </div>
+
                         </div>
                     </div>
+
+
                 </div>
+
+
             </div>
 
-
         </div>
+
     </div>
-
-
 
 
 

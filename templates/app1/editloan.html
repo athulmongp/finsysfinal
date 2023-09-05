@@ -49,9 +49,9 @@
                             placeholder="Employee" value="{{loan.employee.firstname}} {{loan.employee.lastname}}" readonly>
                     </div>
                     <div class="col-md-5 ml-4">
-                        <label class="col-form-label">Employee Id</label>
+                        <label class="col-form-label">Employee No</label>
                         <input type="text" class="form-control" id="employeeid" name="employeeid"
-                            placeholder="Employee Id" value="{{loan.employee.employeeid}}" readonly>
+                            placeholder="Employee Id" value="{{loan.employee.employeeno}}" readonly>
                     </div>
 
 
@@ -88,56 +88,43 @@
 
                         <input type="date" class="form-control" id="experydate" name="experydate" value="{{ loan.ExperyDate }}" required><br>
                     </div>
-
-                    <div class="col-md-5 ml-4">
-                        <label class="col-form-label">Monthly Cutting Percentage</label>
-
-                        <input type="number" class="form-control" id="cuttingPercentage" name="cuttingPercentage"
-                            placeholder="In Percentage" value="{{loan.MonthlyCut_percentage}}"  required><br>
-                    </div>
-                    <div class="col-md-4 mt-3 pt-4">
-                        <label>Monthly Cutting Amount :</label>&nbsp;&nbsp;
-
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" id="no" name="cutingamount"
-                                onchange="show3(this.value)" value="No" checked>
-                            <label class="form-check-label">No</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" id="yes" name="cutingamount"
-                                onchange="show4(this.value)" value="Yes">
-                            <label class="form-check-label">Yes</label>
-                        </div>
-                    </div>
-
-                </div>
-
-                    <div class="desc" id="Cutingamount" style="display: none;">
-                        <div class="card-title mt-3">
-                            <h5 class="mb-0">Cutting Amount</h5>
-                        </div>
-                        <hr>
-                        <div class="row mt-3">
-                            <div class=" col-md-4">
-                                <label class="col-form-label">Monthly Cutting Amount</label>
-
-                                <input type="number" class="form-control" id="amount" name="cuttinamount"
-                                    placeholder="In Amount" style="background-color: #2f516f; color: white;" min="0" value="0" required><br>
-                                <div class="text-danger m-2" id="effectivefrom"></div>
-                            </div>
-                            <div class="col-md-5 ml-4">
-
-
-
-                            </div>
-                        </div>
-                    </div>
                 </div>    
+                <!-- <div class="desc m-4 ml-5 pt-4" id="" style="display: none;">
+                    <div class="card-title mt-3">
+                       
+                    </div>
+                    -->
+                    <h5 class="mb-0 mt-5 ml-4">Monthly Cutting</h5>
+                    <hr class="ml-4"> 
+                    <div class="row mt-3 mb-5">
+                        
+                        <div class="col-3 col-md-5 ml-4">
+                            <label class="col-form-label">Monthly Cutting (%)</label>
+                            <input type="number" oninput="convert()" class="form-control" id="cu" name="cuttingPercentage"
+                             placeholder="In Percentage"style="background-color: #2f516f; color: white;" min="0" value="{{ loan.MonthlyCut_percentage }}" required>
+                        </div>     
+                        <div class="col-3 col-md-5 ml-4">
+                            
+                            <label class="col-form-label">Monthly Cutting (INR)</label>
+                            <input type="number" oninput="convert2()" class="form-control" id="cp" name="cp"
+                                placeholder="amount"style="background-color: #2f516f; color: white; "  min="0" value="{{ loan.MonthlyCut_Amount }}" required>    
+                            
+                             <!-- <span >Rs:</span>
+                            <b><span id="cp">Amount</span></b> -->
+                           
+                            <div class="text-danger m-2" id="effectivefrom"></div>
+                        </div>
+                    </div>        
+                <!-- </div> -->
                     <div class="row clearfix" style="margin-top:20px">
-                        <div class="col-md-6 ml-4">
+                        <div class="col-md-6 ml-5">
                             <textarea class="form-control" id="" name="Note" placeholder="Note"
                                 style="height: 190px;">{{loan.Note}}</textarea>
-                                <img src="{{loan.File.url}}" alt="" style="margin-top: 10px;">
+                            {% if loan.File %}
+                               <img src="{{loan.File.url}}" alt="" style="margin-top: 10px; width: 100%;">
+                            {% else %}  
+                                <img src="" alt="">
+                            {% endif %}    
                             <input type="file" name="file" style="margin-top: 10px; width: 70%;">
                         </div>
                         <div class="col-md-6 ml-4">
@@ -1009,27 +996,79 @@
         document.getElementById('Salarydetails').style.display = 'none';
     }
     function show4(str) {
-        if (document.getElementById('yes').value != false) {
-            $('#amount').prop('readonly', false);
-            const amount =document.getElementById('Loan_Amound');
-            const cutpercentage =document.getElementById('cuttingPercentage');
-            const cutamount=Math.floor((cutpercentage.value/100)*amount.value);
-            document.getElementById('amount').value = cutamount;
+        // if (document.getElementById('Employees').value != 'Timebased') {
+        //     $('#amount').prop('readonly', false);
+        //     // const amount =document.getElementById('Loan_Amound');
+        //     // const cutpercentage =document.getElementById('cuttingPercentage');
+        //     // const cutamount=Math.floor((cutpercentage.value/100)*amount.value);
+        //     // document.getElementById('amount').value = cutamount;
             
-        }
-        else {
-            $('#amount').prop('readonly', true);
+        // }
+        // else {
+        //     $('#amount').prop('readonly', true);
             
-        }
+        // }
         document.getElementById('Cutingamount').style.display = 'none';
-        document.getElementById('Cutingamount').style.display = 'block';
+        document.getElementById('cuttingPercentage').style.display = 'block';
     }
     function show3(sign) {
         document.getElementById('Cutingamount').style.display = 'block';
-        document.getElementById('Cutingamount').style.display = 'none';
+        document.getElementById('cuttingPercentage').style.display = 'none';
         
 
     }
+    function convert(){
+            let per = document.getElementById("cu");
+            let pervalue = per.value;
+            let salary = document.getElementById("Salary").value;
+            
+            const amount =document.getElementById('Loan_Amound');
+            
+            const cutamount=Math.floor((per.value/100)*amount.value);
+
+            document.getElementById("cp").value=cutamount;
+            
+            if (salary > cutamount){
+                document.getElementById("cp").value=cutamount;
+                document.getElementById("cp").style.border="4px solid green"
+                document.getElementById("cu").style.border="4px solid green"
+
+            }
+            else {
+                document.getElementById("cp").value=cutamount;
+                document.getElementById("cp").style.border="4px solid red"
+                document.getElementById("cu").style.border="4px solid red"
+
+            }
+            
+            
+        }
+        function convert2(){
+            let cutamount = document.getElementById("cp");
+            let cutamountvalue = cutamount.value;
+            let salary = document.getElementById("Salary").value;
+            
+            const amount =document.getElementById('Loan_Amound');
+            
+            const per=Math.abs((cutamountvalue/amount.value)*100);
+
+            document.getElementById("cu").value=per;
+            
+            if (Number(salary) > cutamountvalue){
+                document.getElementById("cu").value=per;
+                document.getElementById("cu").style.border="4px solid green"
+                document.getElementById("cp").style.border="4px solid green"
+
+            }
+            else {
+                document.getElementById("cu").value=per;
+                document.getElementById("cu").style.border="4px solid red"
+                document.getElementById("cp").style.border="4px solid red"
+
+            }
+            
+            
+        }
     function toggleDivVisibility() {
         var selectElement = document.getElementById("drp_Bank_Details");
         var selectedValue = selectElement.value;
