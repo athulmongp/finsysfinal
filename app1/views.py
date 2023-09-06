@@ -41512,7 +41512,9 @@ def editloan_action(request,eid):
     loandate = request.POST['loandate'] 
     experydate = request.POST['experydate']
     cuttingPercentage = request.POST['cuttingPercentage']
-    cuttinamount = request.POST['cp']
+    print(cuttingPercentage)
+    cuttinamount = request.POST['Cutingamount']
+    print(cuttinamount)
    
     
     Note = request.POST['Note']
@@ -41524,18 +41526,20 @@ def editloan_action(request,eid):
     else:
         employee.File=new
 
-    oldper=employee.MonthlyCut_percentage    
-    oldca=employee.MonthlyCut_Amount
+    oldper=employee.MonthlyCut_percentage  
+    print(oldper)  
+    oldca=int(employee.MonthlyCut_Amount)
+    print(oldca)
+    
+    if int(oldper)!= int(cuttingPercentage):
+        employee.MonthlyCut_percentage = cuttingPercentage
+        employee.MonthlyCut_Amount = ((int(cuttingPercentage)/100)*int(Loan_Amount)) 
 
-    if oldca!=cuttinamount:
-        employee.MonthlyCut_percentage=((int(cuttinamount)/int(Loan_Amount))*100)
-        employee.MonthlyCut_Amount=cuttinamount
-    elif oldper!=cuttingPercentage:
-        employee.MonthlyCut_percentage= cuttingPercentage
-        employee.MonthlyCut_Amount = ((int(cuttingPercentage)/100)*int(Loan_Amount))
     else:
-        employee.MonthlyCut_percentage= cuttingPercentage
-        employee.MonthlyCut_Amount=cuttinamount
+        employee.MonthlyCut_percentage = ((int(cuttinamount)/int(Loan_Amount))*100)
+        employee.MonthlyCut_Amount = cuttinamount
+
+    
 
 
     employee.LoanAmount = Loan_Amount
@@ -41545,7 +41549,7 @@ def editloan_action(request,eid):
     employee.Note = Note
     
     employee.save()    
-    return redirect('employee_details',eid) 
+    return redirect('employee_details',eid)
 
 def deleteloan(request,eid):
     cmp1 = company.objects.get(id=request.session["uid"])

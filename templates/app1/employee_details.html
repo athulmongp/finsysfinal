@@ -197,8 +197,8 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{% url 'loan_add_file' employee.id  %}" method="POST" enctype="multipart/form-data">{%
-                csrf_token %}
+            <form action="{% url 'loan_add_file' employee.id  %}" method="POST" enctype="multipart/form-data">
+                {%csrf_token %}
                 <div class="modal-body">
                     <input type="file" class="form-control" name="file">
                 </div>

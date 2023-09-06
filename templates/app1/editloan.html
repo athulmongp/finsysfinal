@@ -88,19 +88,80 @@
 
                         <input type="date" class="form-control" id="experydate" name="experydate" value="{{ loan.ExperyDate }}" required><br>
                     </div>
-                </div>    
+                </div>  
+                <div class="row m-4 ml-5 pt-4">   
+                    <!-- <div class="col-md-4 m-4 ml-5 pt-4"> -->
+                        <label><b>Monthly Cutting :</b></label>&nbsp;&nbsp;
+
+                        <div class="form-check form-check-inline ml-3" >
+                            <input class="form-check-input" type="radio" id="no" name="cutingamount"
+                                onchange="show3(this.value)" value="No" required>
+                            <label class="form-check-label">In Amount</label>
+                        </div>
+                        <div class="form-check form-check-inline ml-3">
+                            <input class="form-check-input" type="radio" id="yes" name="cutingamount" 
+                                onchange="show4(this.value)" value="Yes"  required checked>
+                            <label class="form-check-label">In Percentage</label>
+                        </div>
+                    <!-- </div> -->
+
+                </div>
+                    <!-- <div class="row"> -->
+                        <div class="desc m-4 ml-5 pt-4" id="cuttingPercentage" style="display: none;">
+                            <div class="card-title mt-3">
+                                <h5 class="mb-0">Monthly Cutting in Percentage</h5>
+                            </div>
+                            <hr>
+                            <div class="row mt-3">
+                                <div class=" col-md-4">
+                                    <label class="col-form-label">Monthly Cutting (%)</label>
+                                    <input type="number" oninput="convert()" class="form-control" id="cu" name="cuttingPercentage"
+                                     placeholder="In Percentage"style="background-color: #2f516f; color: white;" min="0" value="{{ loan.MonthlyCut_percentage }}" required>
+                                </div>     
+                                <div class="col-3 col-md-4">
+                                    
+                                    <label class="col-form-label">Amount</label>
+                                    <input type="number"  class="form-control" id="cp" name="cp"
+                                        placeholder="amount"style="background-color: #2f516f; color: white; width:50%;"  min="0" value="{{ loan.MonthlyCut_Amount }}" readonly required>    
+                                    
+                                     <!-- <span >Rs:</span>
+                                    <b><span id="cp">Amount</span></b> -->
+                                   
+                                    <div class="text-danger m-2" id="effectivefrom"></div>
+                                </div>
+                            </div>        
+                        </div>
+                    <!-- </div> -->
+                    <div class="desc m-4 ml-5 pt-4" id="Cutingamount" style="display: none;">
+                        <div class="card-title mt-3">
+                            <h5 class="mb-0">Monthly Cutting in Amount</h5>
+                        </div>
+                        <hr>
+                        <div class="row mt-3">
+                            <div class="col-md-5">
+                                <label class="col-form-label">Monthly Cutting (INR)</label>
+
+                                <input type="number" oninput="validatecutamount()" class="form-control" id="amount" name="Cutingamount"
+                                    placeholder="In Amount" style="background-color: #2f516f; color: white; " min="0" value="{{ loan.MonthlyCut_Amount }}" required><br>
+                                <div class="text-danger m-2" id="effectivefrom"></div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                   
+                </div>      
                 <!-- <div class="desc m-4 ml-5 pt-4" id="" style="display: none;">
                     <div class="card-title mt-3">
                        
                     </div>
                     -->
-                    <h5 class="mb-0 mt-5 ml-4">Monthly Cutting</h5>
+                    <!-- <h5 class="mb-0 mt-5 ml-4">Monthly Cutting</h5>
                     <hr class="ml-4"> 
                     <div class="row mt-3 mb-5">
                         
                         <div class="col-3 col-md-5 ml-4">
                             <label class="col-form-label">Monthly Cutting (%)</label>
-                            <input type="number" oninput="convert()" class="form-control" id="cu" name="cuttingPercentage"
+                            <input type="text" oninput="convert()" class="form-control" id="cu" "
                              placeholder="In Percentage"style="background-color: #2f516f; color: white;" min="0" value="{{ loan.MonthlyCut_percentage }}" required>
                         </div>     
                         <div class="col-3 col-md-5 ml-4">
@@ -109,12 +170,11 @@
                             <input type="number" oninput="convert2()" class="form-control" id="cp" name="cp"
                                 placeholder="amount"style="background-color: #2f516f; color: white; "  min="0" value="{{ loan.MonthlyCut_Amount }}" required>    
                             
-                             <!-- <span >Rs:</span>
-                            <b><span id="cp">Amount</span></b> -->
+                            
                            
                             <div class="text-danger m-2" id="effectivefrom"></div>
                         </div>
-                    </div>        
+                    </div>         -->
                 <!-- </div> -->
                     <div class="row clearfix" style="margin-top:20px">
                         <div class="col-md-6 ml-5">
@@ -995,19 +1055,21 @@
         document.getElementById('Salarydetails').style.display = 'block';
         document.getElementById('Salarydetails').style.display = 'none';
     }
+    $(document).ready(function(){
+        if ($('#yes').prop(":checked")){
+            document.getElementById('Cutingamount').style.display = 'block';
+            document.getElementById('cuttingPercentage').style.display = 'none';
+
+
+        }
+        else{
+            document.getElementById('Cutingamount').style.display = 'none';
+            document.getElementById('cuttingPercentage').style.display = 'block';
+
+        }
+    });
     function show4(str) {
-        // if (document.getElementById('Employees').value != 'Timebased') {
-        //     $('#amount').prop('readonly', false);
-        //     // const amount =document.getElementById('Loan_Amound');
-        //     // const cutpercentage =document.getElementById('cuttingPercentage');
-        //     // const cutamount=Math.floor((cutpercentage.value/100)*amount.value);
-        //     // document.getElementById('amount').value = cutamount;
-            
-        // }
-        // else {
-        //     $('#amount').prop('readonly', true);
-            
-        // }
+  
         document.getElementById('Cutingamount').style.display = 'none';
         document.getElementById('cuttingPercentage').style.display = 'block';
     }
@@ -1017,6 +1079,7 @@
         
 
     }
+    
     function convert(){
             let per = document.getElementById("cu");
             let pervalue = per.value;
@@ -1024,7 +1087,7 @@
             
             const amount =document.getElementById('Loan_Amound');
             
-            const cutamount=Math.floor((per.value/100)*amount.value);
+            const cutamount=Math.ceil((per.value/100)*amount.value);
 
             document.getElementById("cp").value=cutamount;
             
@@ -1042,6 +1105,17 @@
             }
             
             
+        }
+        function validatecutamount(){
+            const loamt = document.getElementById("amount").value;   
+            let salary = document.getElementById("Salary").value;    
+            if (Number(salary) >= loamt){
+                document.getElementById("amount").style.border="4px solid green";
+            }
+            else {
+                document.getElementById("amount").style.border="3px solid red";
+            }
+
         }
         function convert2(){
             let cutamount = document.getElementById("cp");
