@@ -93,16 +93,29 @@
                     <!-- <div class="col-md-4 m-4 ml-5 pt-4"> -->
                         <label><b>Monthly Cutting :</b></label>&nbsp;&nbsp;
 
-                        <div class="form-check form-check-inline ml-3" >
-                            <input class="form-check-input" type="radio" id="no" name="cutingamount"
+                        {% if employee.action == 1 %}
+                            <div class="form-check form-check-inline ml-3" >
+                                <input class="form-check-input" type="radio" id="no" name="cutingamount"
                                 onchange="show3(this.value)" value="No" required>
-                            <label class="form-check-label">In Amount</label>
-                        </div>
-                        <div class="form-check form-check-inline ml-3">
-                            <input class="form-check-input" type="radio" id="yes" name="cutingamount" 
+                                <label class="form-check-label">In Amount</label>
+                            </div>
+                            <div class="form-check form-check-inline ml-3">
+                                <input class="form-check-input" type="radio" id="yes" name="cutingamount" 
                                 onchange="show4(this.value)" value="Yes"  required checked>
-                            <label class="form-check-label">In Percentage</label>
-                        </div>
+                                <label class="form-check-label">In Percentage</label>
+                            </div>
+                        {% else %}
+                            <div class="form-check form-check-inline ml-3" >
+                                <input class="form-check-input" type="radio" id="no" name="cutingamount"
+                                onchange="show3(this.value)" value="No" required checked>
+                                <label class="form-check-label">In Amount</label>
+                            </div>
+                            <div class="form-check form-check-inline ml-3">
+                                <input class="form-check-input" type="radio" id="yes" name="cutingamount" 
+                                onchange="show4(this.value)" value="Yes"  required>
+                                <label class="form-check-label">In Percentage</label>
+                            </div>
+                        {% endif %}
                     <!-- </div> -->
 
                 </div>
@@ -1055,19 +1068,31 @@
         document.getElementById('Salarydetails').style.display = 'block';
         document.getElementById('Salarydetails').style.display = 'none';
     }
+    
     $(document).ready(function(){
-        if ($('#yes').prop(":checked")){
-            document.getElementById('Cutingamount').style.display = 'block';
-            document.getElementById('cuttingPercentage').style.display = 'none';
-
-
-        }
-        else{
+        if ($('#yes').is(":checked")){
             document.getElementById('Cutingamount').style.display = 'none';
             document.getElementById('cuttingPercentage').style.display = 'block';
+        }
+        else{
 
+            document.getElementById('Cutingamount').style.display = 'block';
+            document.getElementById('cuttingPercentage').style.display = 'none';
         }
     });
+    // $(document).ready(function(){
+    //     if ($('#no').prop(":checked")){
+    //         document.getElementById('Cutingamount').style.display = 'block';
+    //         document.getElementById('cuttingPercentage').style.display = 'none';
+
+
+    //     }
+    //     else{
+    //         document.getElementById('Cutingamount').style.display = 'block';
+    //         document.getElementById('cuttingPercentage').style.display = 'none';
+
+    //     }
+    // });
     function show4(str) {
   
         document.getElementById('Cutingamount').style.display = 'none';

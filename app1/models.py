@@ -2050,3 +2050,4 @@ class EmployeeLoan(models.Model):
       File = models.FileField(upload_to='loanfile',default="",blank=True, null=True)
       company = models.ForeignKey(company, on_delete=models.CASCADE)
       status = models.CharField(max_length=20,null=True)
+      action= models.IntegerField(blank=True,null=True)

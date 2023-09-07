@@ -41360,10 +41360,12 @@ def addemployeeloan(request):
 
         if int(cuttingPercentage)==0 and int(cuttinamount)!=0:
             data.MonthlyCut_Amount=cuttinamount
-            data.MonthlyCut_percentage=((int(cuttinamount)/int(Loan_Amound))*100)          
+            data.MonthlyCut_percentage=((int(cuttinamount)/int(Loan_Amound))*100)
+            data.action=0          
         else: 
             data.MonthlyCut_percentage= cuttingPercentage  
             data.MonthlyCut_Amount = ((int(cuttingPercentage)/100)*int(Loan_Amound)) 
+            data.action=1
             
            
         data.save()
@@ -41533,11 +41535,13 @@ def editloan_action(request,eid):
     
     if int(oldper)!= int(cuttingPercentage):
         employee.MonthlyCut_percentage = cuttingPercentage
-        employee.MonthlyCut_Amount = ((int(cuttingPercentage)/100)*int(Loan_Amount)) 
-
+        employee.MonthlyCut_Amount = ((int(cuttingPercentage)/100)*int(Loan_Amount))
+        employee.action=1
+ 
     else:
         employee.MonthlyCut_percentage = ((int(cuttinamount)/int(Loan_Amount))*100)
         employee.MonthlyCut_Amount = cuttinamount
+        employee.action=0
 
     
 
