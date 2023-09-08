@@ -911,23 +911,7 @@ urlpatterns = [
 
     path('account_dropdown',views.account_dropdown,name = 'account_dropdown'),
     
-   # urls of muhammed ashiq 
-   
-    path('delivery_challan',views.delivery_challan,name='delivery_challan'),
-    path('goadd_dl_challan',views.goadd_dl_challan,name='goadd_dl_challan'),
-    path('delivery_view/<int:id>',views.delivery_view,name='delivery_view'),
-    path('add_cx',views.add_cx,name='add_cx'),
-    path('challancreate',views.challancreate,name='challancreate'),
-    path('challan_add_file/<int:id>',views.challan_add_file,name='challan_add_file'),
-    path('editchallan/<int:id>',views.editchallan,name='editchallan'),
-    path('deletechallan/<int:id>',views.deletechallan,name='deletechallan'),
-    path('render_pdfchallan_view/<int:id>', views.render_pdfchallan_view, name='render_pdfchallan_view'),
-    path('challan_convert1/<int:id>',views.challan_convert1,name='challan_convert1'),
-    path('edited_challan/<int:id>',views.edited_challan,name='edited_challan'),
-    path('removecl', views.removecl, name='removecl'),
-    path('gochallan1',views.gochallan1,name='gochallan1'),
-    path('gochallan2',views.gochallan2,name='gochallan2'),
-    path('additem_challan',views.additem_challan,name='additem_challan'),
+
     
     # urls for Price list
     
@@ -1047,5 +1031,27 @@ urlpatterns = [
     path('inactiveloanpage', views.inactiveloanpage, name='inactiveloanpage'),
     path('sortemployeename', views.sortemployeename, name='sortemployeename'),
     path('sortloanamount', views.sortloanamount, name='sortloanamount'),
+
+       # urls of delivery chellan 
+   
+    path('delivery_challan',views.delivery_challan,name='delivery_challan'),
+    path('goadd_dl_challan',views.goadd_dl_challan,name='goadd_dl_challan'),
+    path('delivery_view/<int:id>',views.delivery_view,name='delivery_view'),
+    path('add_cx',views.add_cx,name='add_cx'),
+    path('challancreate',views.challancreate,name='challancreate'),
+    path('challan_add_file/<int:id>',views.challan_add_file,name='challan_add_file'),
+    path('editchallan/<int:id>',views.editchallan,name='editchallan'),
+    path('deletechallan/<int:id>',views.deletechallan,name='deletechallan'),
+    path('render_pdfchallan_view/<int:id>', views.render_pdfchallan_view, name='render_pdfchallan_view'),
+    path('challan_convert1/<int:id>',views.challan_convert1,name='challan_convert1'),
+    path('edited_challan/<int:id>',views.edited_challan,name='edited_challan'),
+    path('removecl', views.removecl, name='removecl'),
+    path('gochallan1',views.gochallan1,name='gochallan1'),
+    path('gochallan2',views.gochallan2,name='gochallan2'),
+    path('additem_challan',views.additem_challan,name='additem_challan'),
+    path('sort_chellan_customername', views.sort_chellan_customername, name='sort_chellan_customername'),
+    path('sort_chellan_chellannumber', views.sort_chellan_chellannumber, name='sort_chellan_chellannumber'),
+
+
      
 ]

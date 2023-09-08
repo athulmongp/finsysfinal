@@ -9925,6 +9925,7 @@ def getdata(request):
     x.append(" ")
     a = x[0]
     b = x[1]
+    
     if x[2] is not None:
         b = x[1] + " " + x[2]
         custobject = customer.objects.get(firstname=a, lastname=b, cid=cmp1)
@@ -38961,377 +38962,7 @@ def recurexpense_customer(request):
             return HttpResponse({"message": "success"})        
 
 
-#views of muhammed ashiq 
 
-@login_required(login_url='regcomp')
-
-def delivery_challan(request):
-    cmp1 = company.objects.get(id=request.session["uid"])
-    customers = customer.objects.filter(cid=cmp1).all()
-    invs = challan.objects.filter(cid=cmp1).all()
-    context = {'invoice': invs, 'customers': customers, 'cmp1': cmp1}
-    return render(request,'app1/delivery_challan.html', context)
-    
-def goadd_dl_challan(request):
-    try:
-        customers = customer.objects.all()
-        toda = date.today()
-        tod = toda.strftime("%Y-%m-%d")
-        cmp1 = company.objects.get(id=request.session["uid"])
-        inv = inventory.objects.filter(cid=cmp1)
-        bun = bundle.objects.filter(cid=cmp1)
-        noninv = noninventory.objects.filter(cid=cmp1)
-        ser = service.objects.filter(cid=cmp1)
-        item = itemtable.objects.filter(cid=cmp1).all()
-
-        unit = unittable.objects.filter(cid=cmp1)
-        acc  = accounts1.objects.filter(acctype='Cost of Goods Sold',cid=cmp1)
-        acc1  = accounts1.objects.filter(acctype='Sales',cid=cmp1)
-
-
-
-        context = {'cmp1': cmp1, 'customers': customers, 'inv': inv, 'bun': bun, 'noninv': noninv,'item' :item,
-                   'ser': ser,
-                   'tod': tod,
-                   'unit':unit,'acc':acc,'acc1':acc1,
-                   }
-        return render(request, 'app1/add_deliver_challan.html', context)
-    except:
-        return redirect('delivery_challan') 
-    
-@login_required(login_url='regcomp')
-
-def delivery_view(request,id):
-    cmp1 = company.objects.get(id=request.session['uid'])
-    upd = challan.objects.get(id=id, cid=cmp1)
-
-    estitem = challanitem.objects.filter(dl_id=id)
-
-    context ={
-        'estimate':upd,
-        'cmp1':cmp1,
-        'estitem':estitem,
-
-    }
-    
-    return render(request,'app1/delivery_challan_view.html', context)
-
-def challan_add_file(request,id):
-    cmp1 = company.objects.get(id=request.session['uid'])
-    est = challan.objects.get(id=id,cid=cmp1)
-
-    if request.method == 'POST':
-        
-        if len(request.FILES) != 0:
-           
-            if est.file != "default.jpg":
-                 os.remove(est.file.path)
-                
-            est.file=request.FILES['file']
-        
-        est.save()
-        return redirect('delivery_view',id)
-
-
-
-
-
-
-def add_cx(request):
-    try:
-        cmp1 = company.objects.get(id=request.session["uid"])
-        if request.method == "POST":
-            customer1 = customer(title=request.POST['title'], firstname=request.POST['firstname'],
-                                 lastname=request.POST['lastname'], company=request.POST['company'],
-                                 location=request.POST['location'], gsttype=request.POST['gsttype'],
-                                 gstin=request.POST['gstin'], panno=request.POST['panno'], email=request.POST['email'],
-                                 website=request.POST['website'], mobile=request.POST['mobile'],
-                                 street=request.POST['street'], city=request.POST['city'], state=request.POST['state'],
-                                 pincode=request.POST['pincode'], country=request.POST['country'],
-                                 shipstreet=request.POST['shipstreet'], shipcity=request.POST['shipcity'],
-                                 shipstate=request.POST['shipstate'],
-                                 shippincode=request.POST['shippincode'], shipcountry=request.POST['shipcountry'],
-                                 cid=cmp1)
-
-            customer1.save()
-            return redirect('goadd_dl_challan')
-        else:
-            return redirect('delivery_challan')
-    except:
-        return redirect('delivery_challan')
-
-
-
-
-
-
-@login_required(login_url='regcomp')
-def challancreate(request):
-    try:
-        if request.method == 'POST':  
-            cmp1 = company.objects.get(id=request.session["uid"])
-            
-            inv2 = challan(customer=request.POST['customername'], cx_mail=request.POST['email'],
-                        challan_date=request.POST['challandate'],
-
-                        challan_type=request.POST['terms'],  billto=request.POST['bname'],
-                        pl=request.POST['placosupply'],
-
-                            cid=cmp1,
-                            subtotal=float(request.POST['subtotal']),
-                        note = request.POST['Note'],
-                        igst = float(request.POST['igst']),
-                        cgst = float(request.POST['cgst']),
-                        sgst = float(request.POST['sgst']),
-                        taxamount = float(request.POST['totaltax']),
-                        grand=float(request.POST['t_total']),
-                        shipping=request.POST['ship'],
-                        ref=request.POST['ref'],
-                        chal_no =request.POST['chal_no'],
-
-                        )
-            inv2.save()
-            
-            product=request.POST.getlist('item[]')
-            hsn=request.POST.getlist('hsn[]')
-            quantity=request.POST.getlist('quantity[]')
-            rate=request.POST.getlist('rate[]')
-            desc=request.POST.getlist('desc[]')
-            tax=request.POST.getlist('tax[]')
-            total=request.POST.getlist('amount[]')
-            discount=request.POST.getlist('discount[]')
-            cl_id=challan.objects.get(id=inv2.id)
-            if len(product)==len(hsn)==len(quantity)==len(desc)==len(tax)==len(total)==len(rate)==len(discount):
-
-                mapped = zip(product,hsn,quantity,desc,tax,total,rate,discount)
-                mapped = list(mapped)
-                for element in mapped:
-                    created = challanitem.objects.get_or_create(dl=cl_id,product=element[0],hsn=element[1],
-                                            quantity=element[2],desc=element[3],tax=element[4],total=element[5],rate=element[6],cid=cmp1,discount=element[7])
-                    return redirect('delivery_challan')
-    
-        return render(request,'app1/add_deliver_challan.html')
-    except:
-        return render(request,'app1/add_deliver_challan.html')
-
-
-def editchallan(request,id):
-        customers = customer.objects.all()
-        toda = date.today()
-        tod = toda.strftime("%Y-%m-%d")
-        cmp1 = company.objects.get(id=request.session['uid'])
-        inv = inventory.objects.filter(cid=cmp1)
-        bun = bundle.objects.filter(cid=cmp1)
-        noninv = noninventory.objects.filter(cid=cmp1)
-        ser = service.objects.filter(cid=cmp1)
-        item = itemtable.objects.filter(cid=cmp1).all()
-
-        unit = unittable.objects.filter(cid=cmp1)
-        acc  = accounts1.objects.filter(acctype='Cost of Goods Sold',cid=cmp1)
-        acc1  = accounts1.objects.filter(acctype='Sales',cid=cmp1)
-
-        upd = challan.objects.get(id=id, cid=cmp1)
-        estitem = challanitem.objects.filter(dl_id=id)
-
-        context = {'cmp1': cmp1, 'customers': customers, 'inv': inv, 'bun': bun, 'noninv': noninv,'item' :item,
-                   'ser': ser,
-                   'tod': tod,
-                   'unit':unit,'acc':acc,'acc1':acc1,'ch':upd,'chitem':estitem,
-                   }
-    
-
-    
-        return render(request,'app1/editchallan.html',context)
-
-def edited_challan(request,id):
-    if request.method == 'POST':
-       
-            cmp1 = company.objects.get(id=request.session['uid'])
-            ch = challan.objects.get(id=id, cid=cmp1)
-            ch.customer=request.POST['customername']
-            ch.cx_mail = request.POST['email']
-            ch.challan_date=request.POST['challandate']
-            ch.challan_type=request.POST['terms']
-            ch.billto=request.POST['bname']
-            ch.pl=request.POST['placosupply']
-            ch.subtotal=float(request.POST['subtotal'])
-            ch.note = request.POST['Note']
-            ch.igst = float(request.POST['igst'])
-            ch.cgst = float(request.POST['cgst'])
-            ch.sgst = float(request.POST['sgst'])
-            ch.taxamount = float(request.POST['totaltax'])
-            ch.ref=request.POST['ref']
-            ch.chal_no=request.POST['chal_no']
-            ch.shipping=request.POST['ship']
-            ch.grand=float(request.POST['t_total'])
-            if len(request.FILES) != 0:
-                if len(ch.file) != "default.jpg" :
-                    os.remove(ch.file.path)                    
-                    ch.file = request.FILES.get('file')
-
-            ch.save()
-            
-            product=request.POST.getlist('item[]')
-            hsn=request.POST.getlist('hsn[]')
-            quantity=request.POST.getlist('quantity[]')
-            rate=request.POST.getlist('rate[]')
-            desc=request.POST.getlist('desc[]')
-            tax=request.POST.getlist('tax[]')
-            total=request.POST.getlist('amount[]')
-            itemid = request.POST.getlist("id[]")
-            discount=request.POST.getlist('discount[]')
-            chid=challan.objects.get(id =ch.id)
-            count = challanitem.objects.filter(dl=chid).count()
-            obj_dele=challanitem.objects.filter(dl=ch.id)
-            obj_dele.delete()
-       
-            if len(product)==len(hsn)==len(quantity)==len(desc)==len(tax)==len(total)==len(rate)==len(discount):
-
-                mapped = zip(product,hsn,quantity,desc,tax,total,rate,discount)
-                mapped = list(mapped)
-                for element in mapped:
-                    created = challanitem.objects.get_or_create(dl=chid,cid=cmp1,product=element[0],hsn=element[1],
-                                    quantity=element[2],desc=element[3],tax=element[4],total=element[5],rate=element[6],discount=element[7])
-                
-                return redirect('delivery_view',id)
-
-
-        
-    else:
-        return redirect('delivery_challan')
-
-
-
-def deletechallan(request,id):
-    try:
-        cmp1 = company.objects.get(id=request.session['uid'])
-        upd = challan.objects.get(id=id, cid=cmp1)
-        
-        upd.delete()
-        os.remove(upd.challan.path)
-        return redirect('delivery_challan')
-    except:
-        return redirect('delivery_challan')
-
-
-def render_pdfchallan_view(request,id):
-
-    cmp1 = company.objects.get(id=request.session['uid'])
-    upd = challan.objects.get(id=id, cid=cmp1)
-
-    estitem = challanitem.objects.filter(dl_id=id)
-
-    total = upd.grand
-    words_total = num2words(total)
-    template_path = 'app1/pdfchallan.html'
-    context ={
-        'estimate':upd,
-        'cmp1':cmp1,
-        'estitem':estitem,
-    
-    }
-    fname=upd.chal_no
-   
-    # Create a Django response object, and specify content_type as pdftemp_creditnote
-    response = HttpResponse(content_type='application/pdf')
-    #response['Content-Disposition'] = 'attachment; filename="certificate.pdf"'
-    response['Content-Disposition'] =f'attachment; filename= {fname}.pdf'
-    # find the template and render it.
-    template = get_template(template_path)
-    html = template.render(context)
-
-    # create a pdf
-    pisa_status = pisa.CreatePDF(
-       html, dest=response)
-    
-
-
-    # if error then show some funy view
-    if pisa_status.err:
-       return HttpResponse('We had some errors <pre>' + html + '</pre>')
-    return response
-
-
-
-def challan_convert1(request,id):
-    cmp1 = company.objects.get(id=request.session['uid'])
-    upd = challan.objects.get(id=id, cid=cmp1)
-
-    upd.status = 'Approved'
-    upd.save()
-
-
-
-    return redirect(delivery_view,id)
-
-def removecl(request):
-    print("sadsad")
-    id = request.GET.get('id')
-    crid = request.GET.get('cr')
-    dbs=challanitem.objects.filter(product=id,invoice=crid)
-    dbs.delete()
-    print("fine")
-    return JsonResponse({'crid':crid,})
-
-
-def gochallan1(request):
-    cmp1 = company.objects.get(id=request.session["uid"])
-    customers = customer.objects.filter(cid=cmp1).all()
-    invs = challan.objects.filter(cid=cmp1,status='Draft').all()
-    context = {'invoice': invs, 'customers': customers, 'cmp1': cmp1}
-    return render(request,'app1/delivery_challan.html', context)
-
-def gochallan2(request):
-    cmp1 = company.objects.get(id=request.session["uid"])
-    customers = customer.objects.filter(cid=cmp1).all()
-    invs = challan.objects.filter(cid=cmp1,status='Approved').all()
-    context = {'invoice': invs, 'customers': customers, 'cmp1': cmp1}
-    return render(request,'app1/delivery_challan.html', context)
-
-
-def additem_challan(request):
-    if 'uid' in request.session:
-        if request.session.has_key('uid'):
-            uid = request.session['uid']
-        else:
-            return redirect('/')
-    cmp1 = company.objects.get(id=request.session['uid'])
-    types=request.GET.get('types')
-    inters=request.GET.get('inters')
-    intras=request.GET.get('intras')
-    names=request.GET.get('names')
-    units=request.GET.get('units')
-    sel_prices=request.GET.get('sel_prices')
-    sel_accs=request.GET.get('sel_accs')
-    s_descs=request.GET.get('s_descs')
-    cost_prices=request.GET.get('cost_prices')
-    cost_accs=request.GET.get('cost_accs')      
-    p_descs=request.GET.get('p_descs')
-    status=request.GET.get('status')
-    invacc=request.GET.get('invacc')
-    stock=request.GET.get('stock')
-    hsn=request.GET.get('hsn')
-    taxType=request.GET.get('taxType')
-    print(names)
-    item = itemtable(name=names,item_type=types,unit=units,
-                                hsn=hsn,tax_reference=taxType,
-                                purchase_cost=cost_prices,
-                                sales_cost=sel_prices,
-                                #tax_rate=itrate,
-                                acount_pur=cost_accs,
-                                account_sal=sel_accs,
-                                pur_desc=p_descs,
-                                sale_desc=s_descs,
-                                intra_st=intras,
-                                inter_st=inters,
-                                inventry=invacc,
-                                stock=stock,
-                                status=status,
-                                cid=cmp1)
-    item.save()   
-    print('done!!!!!!!!!!!')
-
-    return JsonResponse({"status": " not", 'names': names})
 
 
 # ---------------------------------------------------------views for pricelist---------------------
@@ -41280,7 +40911,7 @@ def edit_add_cash(request,id):
 
 
 
-# ------------athul-------
+# ------------athul-------employee loan
 def employeeloanpage(request):
     cmp1 = company.objects.get(id=request.session["uid"])
     employee=EmployeeLoan.objects.filter(company=request.session["uid"])
@@ -41575,3 +41206,396 @@ def loan_add_file(request,id):
             loan.File=request.FILES['file']
         loan.save()
         return redirect('employee_details',id)
+
+
+# ------athul--- delivery_challan ------
+
+
+@login_required(login_url='regcomp')
+
+def delivery_challan(request):
+    cmp1 = company.objects.get(id=request.session["uid"])
+    customers = customer.objects.filter(cid=cmp1).all()
+    invs = challan.objects.filter(cid=cmp1).all()
+    context = {'invoice': invs, 'customers': customers, 'cmp1': cmp1}
+    return render(request,'app1/delivery_challan.html', context)
+    
+def goadd_dl_challan(request):
+    try:
+        customers = customer.objects.all()
+        toda = date.today()
+        tod = toda.strftime("%Y-%m-%d")
+        cmp1 = company.objects.get(id=request.session["uid"])
+        inv = inventory.objects.filter(cid=cmp1)
+        bun = bundle.objects.filter(cid=cmp1)
+        noninv = noninventory.objects.filter(cid=cmp1)
+        ser = service.objects.filter(cid=cmp1)
+        item = itemtable.objects.filter(cid=cmp1).all()
+
+        unit = unittable.objects.filter(cid=cmp1)
+        acc  = accounts1.objects.filter(acctype='Cost of Goods Sold',cid=cmp1)
+        acc1  = accounts1.objects.filter(acctype='Sales',cid=cmp1)
+
+
+
+        context = {'cmp1': cmp1, 'customers': customers, 'inv': inv, 'bun': bun, 'noninv': noninv,'item' :item,
+                   'ser': ser,
+                   'tod': tod,
+                   'unit':unit,'acc':acc,'acc1':acc1,
+                   }
+        return render(request, 'app1/add_deliver_challan.html', context)
+    except:
+        return redirect('delivery_challan') 
+
+        
+    
+@login_required(login_url='regcomp')
+
+def delivery_view(request,id):
+    cmp1 = company.objects.get(id=request.session['uid'])
+    upd = challan.objects.get(id=id, cid=cmp1)
+
+    estitem = challanitem.objects.filter(dl_id=id)
+
+    context ={
+        'estimate':upd,
+        'cmp1':cmp1,
+        'estitem':estitem,
+
+    }
+    
+    return render(request,'app1/delivery_challan_view.html', context)
+
+def challan_add_file(request,id):
+    cmp1 = company.objects.get(id=request.session['uid'])
+    est = challan.objects.get(id=id,cid=cmp1)
+
+    if request.method == 'POST':
+        
+        if len(request.FILES) != 0:
+           
+            if est.file != "default.jpg":
+                 os.remove(est.file.path)
+                
+            est.file=request.FILES['file']
+        
+        est.save()
+        return redirect('delivery_view',id)
+
+
+
+
+
+
+def add_cx(request):
+    try:
+        cmp1 = company.objects.get(id=request.session["uid"])
+        if request.method == "POST":
+            customer1 = customer(title=request.POST['title'], firstname=request.POST['firstname'],
+                                 lastname=request.POST['lastname'], company=request.POST['company'],
+                                 location=request.POST['location'], gsttype=request.POST['gsttype'],
+                                 gstin=request.POST['gstin'], panno=request.POST['panno'], email=request.POST['email'],
+                                 website=request.POST['website'], mobile=request.POST['mobile'],
+                                 street=request.POST['street'], city=request.POST['city'], state=request.POST['state'],
+                                 pincode=request.POST['pincode'], country=request.POST['country'],
+                                 shipstreet=request.POST['shipstreet'], shipcity=request.POST['shipcity'],
+                                 shipstate=request.POST['shipstate'],
+                                 shippincode=request.POST['shippincode'], shipcountry=request.POST['shipcountry'],
+                                 cid=cmp1)
+
+            customer1.save()
+            return redirect('goadd_dl_challan')
+        else:
+            return redirect('delivery_challan')
+    except:
+        return redirect('delivery_challan')
+
+
+
+
+
+
+@login_required(login_url='regcomp')
+def challancreate(request):
+    
+        if request.method == 'POST':  
+            cmp1 = company.objects.get(cid=request.session["uid"])
+            cust=request.POST['email']
+            c=customer.objects.get(email=cust)
+            print(c)
+            
+            
+            inv2 = challan(customer=c,
+                            challan_date=request.POST['challandate'],
+
+                            challan_type=request.POST['terms'],  billto=request.POST['bname'],
+                             pl=request.POST['placosupply'],
+
+                            cid=cmp1,
+                            subtotal=float(request.POST['subtotal']),
+                            note = request.POST['Note'],
+                            igst = float(request.POST['igst']),
+                            cgst = float(request.POST['cgst']),
+                            sgst = float(request.POST['sgst']),
+                            taxamount = float(request.POST['totaltax']),
+                            grand=float(request.POST['t_total']),
+                            shipping=request.POST['ship'],
+                            ref=request.POST['ref'],
+                            chal_no =request.POST['chal_no'],
+
+                        )
+            inv2.save()
+            
+            product=request.POST.getlist('item[]')
+            hsn=request.POST.getlist('hsn[]')
+            quantity=request.POST.getlist('quantity[]')
+            rate=request.POST.getlist('rate[]')
+            desc=request.POST.getlist('desc[]')
+            tax=request.POST.getlist('tax[]')
+            total=request.POST.getlist('amount[]')
+            discount=request.POST.getlist('discount[]')
+            cl_id=challan.objects.get(id=inv2.id)
+            if len(product)==len(hsn)==len(quantity)==len(desc)==len(tax)==len(total)==len(rate)==len(discount):
+
+                mapped = zip(product,hsn,quantity,desc,tax,total,rate,discount)
+                mapped = list(mapped)
+                for element in mapped:
+                    created = challanitem.objects.get_or_create(dl=cl_id,product=element[0],hsn=element[1],
+                                            quantity=element[2],desc=element[3],tax=element[4],total=element[5],rate=element[6],cid=cmp1,discount=element[7])
+                    return redirect('delivery_challan')
+        print('1')
+        return redirect('goadd_dl_challan')
+    
+
+
+def editchallan(request,id):
+        customers = customer.objects.all()
+        toda = date.today()
+        tod = toda.strftime("%Y-%m-%d")
+        cmp1 = company.objects.get(id=request.session['uid'])
+        inv = inventory.objects.filter(cid=cmp1)
+        bun = bundle.objects.filter(cid=cmp1)
+        noninv = noninventory.objects.filter(cid=cmp1)
+        ser = service.objects.filter(cid=cmp1)
+        item = itemtable.objects.filter(cid=cmp1).all()
+
+        unit = unittable.objects.filter(cid=cmp1)
+        acc  = accounts1.objects.filter(acctype='Cost of Goods Sold',cid=cmp1)
+        acc1  = accounts1.objects.filter(acctype='Sales',cid=cmp1)
+
+        upd = challan.objects.get(id=id, cid=cmp1)
+        estitem = challanitem.objects.filter(dl_id=id)
+
+        context = {'cmp1': cmp1, 'customers': customers, 'inv': inv, 'bun': bun, 'noninv': noninv,'item' :item,
+                   'ser': ser,
+                   'tod': tod,
+                   'unit':unit,'acc':acc,'acc1':acc1,'ch':upd,'chitem':estitem,
+                   }
+    
+
+    
+        return render(request,'app1/editchallan.html',context)
+
+def edited_challan(request,id):
+    if request.method == 'POST':
+       
+            cmp1 = company.objects.get(id=request.session['uid'])
+            ch = challan.objects.get(id=id, cid=cmp1)
+            ch.customer=request.POST['customername']
+            ch.cx_mail = request.POST['email']
+            ch.challan_date=request.POST['challandate']
+            ch.challan_type=request.POST['terms']
+            ch.billto=request.POST['bname']
+            ch.pl=request.POST['placosupply']
+            ch.subtotal=float(request.POST['subtotal'])
+            ch.note = request.POST['Note']
+            ch.igst = float(request.POST['igst'])
+            ch.cgst = float(request.POST['cgst'])
+            ch.sgst = float(request.POST['sgst'])
+            ch.taxamount = float(request.POST['totaltax'])
+            ch.ref=request.POST['ref']
+            ch.chal_no=request.POST['chal_no']
+            ch.shipping=request.POST['ship']
+            ch.grand=float(request.POST['t_total'])
+            if len(request.FILES) != 0:
+                if len(ch.file) != "default.jpg" :
+                    os.remove(ch.file.path)                    
+                    ch.file = request.FILES.get('file')
+
+            ch.save()
+            
+            product=request.POST.getlist('item[]')
+            hsn=request.POST.getlist('hsn[]')
+            quantity=request.POST.getlist('quantity[]')
+            rate=request.POST.getlist('rate[]')
+            desc=request.POST.getlist('desc[]')
+            tax=request.POST.getlist('tax[]')
+            total=request.POST.getlist('amount[]')
+            itemid = request.POST.getlist("id[]")
+            discount=request.POST.getlist('discount[]')
+            chid=challan.objects.get(id =ch.id)
+            count = challanitem.objects.filter(dl=chid).count()
+            obj_dele=challanitem.objects.filter(dl=ch.id)
+            obj_dele.delete()
+       
+            if len(product)==len(hsn)==len(quantity)==len(desc)==len(tax)==len(total)==len(rate)==len(discount):
+
+                mapped = zip(product,hsn,quantity,desc,tax,total,rate,discount)
+                mapped = list(mapped)
+                for element in mapped:
+                    created = challanitem.objects.get_or_create(dl=chid,cid=cmp1,product=element[0],hsn=element[1],
+                                    quantity=element[2],desc=element[3],tax=element[4],total=element[5],rate=element[6],discount=element[7])
+                
+                return redirect('delivery_view',id)
+
+
+        
+    else:
+        return redirect('delivery_challan')
+
+
+
+def deletechallan(request,id):
+    try:
+        cmp1 = company.objects.get(id=request.session['uid'])
+        upd = challan.objects.get(id=id, cid=cmp1)
+        
+        upd.delete()
+        os.remove(upd.challan.path)
+        return redirect('delivery_challan')
+    except:
+        return redirect('delivery_challan')
+
+
+def render_pdfchallan_view(request,id):
+
+    cmp1 = company.objects.get(id=request.session['uid'])
+    upd = challan.objects.get(id=id, cid=cmp1)
+
+    estitem = challanitem.objects.filter(dl_id=id)
+
+    total = upd.grand
+    words_total = num2words(total)
+    template_path = 'app1/pdfchallan.html'
+    context ={
+        'estimate':upd,
+        'cmp1':cmp1,
+        'estitem':estitem,
+    
+    }
+    fname=upd.chal_no
+   
+    # Create a Django response object, and specify content_type as pdftemp_creditnote
+    response = HttpResponse(content_type='application/pdf')
+    #response['Content-Disposition'] = 'attachment; filename="certificate.pdf"'
+    response['Content-Disposition'] =f'attachment; filename= {fname}.pdf'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    
+
+
+    # if error then show some funy view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+
+
+def challan_convert1(request,id):
+    cmp1 = company.objects.get(id=request.session['uid'])
+    upd = challan.objects.get(id=id, cid=cmp1)
+
+    upd.status = 'Approved'
+    upd.save()
+
+
+
+    return redirect(delivery_view,id)
+
+def removecl(request):
+    print("sadsad")
+    id = request.GET.get('id')
+    crid = request.GET.get('cr')
+    dbs=challanitem.objects.filter(product=id,invoice=crid)
+    dbs.delete()
+    print("fine")
+    return JsonResponse({'crid':crid,})
+
+
+def gochallan1(request):
+    cmp1 = company.objects.get(id=request.session["uid"])
+    customers = customer.objects.filter(cid=cmp1).all()
+    invs = challan.objects.filter(cid=cmp1,status='Draft').all()
+    context = {'invoice': invs, 'customers': customers, 'cmp1': cmp1}
+    return render(request,'app1/delivery_challan.html', context)
+
+def gochallan2(request):
+    cmp1 = company.objects.get(id=request.session["uid"])
+    customers = customer.objects.filter(cid=cmp1).all()
+    invs = challan.objects.filter(cid=cmp1,status='Approved').all()
+    context = {'invoice': invs, 'customers': customers, 'cmp1': cmp1}
+    return render(request,'app1/delivery_challan.html', context)
+
+def sort_chellan_customername(request):
+    cmp1 = company.objects.get(id=request.session["uid"])
+    customers = customer.objects.filter(cid=cmp1).all()
+    invs = challan.objects.filter(cid=cmp1).order_by('customer')
+    context = { 'invoice': invs,'customers': customers, 'cmp1': cmp1}
+    return render(request,'app1/delivery_challan.html', context)
+
+def sort_chellan_chellannumber(request):
+    cmp1 = company.objects.get(id=request.session["uid"])
+    customers = customer.objects.filter(cid=cmp1).all()
+    invs = challan.objects.filter(cid=cmp1).order_by('chal_no')
+    context = { 'invoice': invs,'customers': customers, 'cmp1': cmp1}
+   
+    return render(request,'app1/delivery_challan.html', context) 
+
+def additem_challan(request):
+    if 'uid' in request.session:
+        if request.session.has_key('uid'):
+            uid = request.session['uid']
+        else:
+            return redirect('/')
+    cmp1 = company.objects.get(id=request.session['uid'])
+    types=request.GET.get('types')
+    inters=request.GET.get('inters')
+    intras=request.GET.get('intras')
+    names=request.GET.get('names')
+    units=request.GET.get('units')
+    sel_prices=request.GET.get('sel_prices')
+    sel_accs=request.GET.get('sel_accs')
+    s_descs=request.GET.get('s_descs')
+    cost_prices=request.GET.get('cost_prices')
+    cost_accs=request.GET.get('cost_accs')      
+    p_descs=request.GET.get('p_descs')
+    status=request.GET.get('status')
+    invacc=request.GET.get('invacc')
+    stock=request.GET.get('stock')
+    hsn=request.GET.get('hsn')
+    taxType=request.GET.get('taxType')
+    print(names)
+    item = itemtable(name=names,item_type=types,unit=units,
+                                hsn=hsn,tax_reference=taxType,
+                                purchase_cost=cost_prices,
+                                sales_cost=sel_prices,
+                                #tax_rate=itrate,
+                                acount_pur=cost_accs,
+                                account_sal=sel_accs,
+                                pur_desc=p_descs,
+                                sale_desc=s_descs,
+                                intra_st=intras,
+                                inter_st=inters,
+                                inventry=invacc,
+                                stock=stock,
+                                status=status,
+                                cid=cmp1)
+    item.save()   
+    print('done!!!!!!!!!!!')
+
+    return JsonResponse({"status": " not", 'names': names})        

@@ -1723,52 +1723,7 @@ class recurring_expense(models.Model):
     note = models.CharField(max_length=255,null=True,blank=True)
     file = models.FileField(upload_to='purchase/recurring_expense',default="default.png")
     
-    
-#deliver challan models.py by muhammed ashiq
-
-
-class challan(models.Model):
-    cid = models.ForeignKey(company, on_delete=models.CASCADE)
-    chal_no=models.CharField(max_length=100)
-    challan_date=models.DateField()
-    challan_type=models.CharField(max_length=100)
-    customer=models.CharField(max_length=100)
-    cx_mail=models.CharField(max_length=100)
-    billto=models.TextField(max_length=100)
-    taxamount=models.FloatField(default=0)
-    igst=models.FloatField(default=0)
-    cgst=models.FloatField(default=0)
-    sgst=models.FloatField(default=0)
-    subtotal=models.FloatField()
-    grand=models.FloatField()
-    pl=models.CharField(max_length=100)
-    note=models.TextField(max_length=100)
-    file = models.FileField(upload_to='challan/',default="default.png")
-    
-    invoice_status = (
-        ('Draft','Draft'),
-        
-        ('Invoiced','Invoiced'),
-
-    )
-    
-    status =models.CharField(max_length=150,choices=invoice_status,default='Draft')
-    ref=models.TextField(max_length=100)
-    shipping=models.IntegerField()
-
-
-class challanitem(models.Model):
-    product=models.TextField(max_length=255)
-    quantity=models.IntegerField()
-    hsn=models.TextField(max_length=255)
-    tax=models.IntegerField(default=0)
-    total=models.FloatField()
-    desc=models.TextField(max_length=255)
-    rate=models.FloatField()
-    dl=models.ForeignKey(challan,on_delete=models.CASCADE)
-    cid = models.ForeignKey(company, on_delete=models.CASCADE)
-    discount=models.FloatField(default=0)
-    
+ 
     
 # Models for price list
 
@@ -2039,6 +1994,7 @@ class bank_transactions(models.Model):
     banking=models.ForeignKey(bankings_G, on_delete=models.CASCADE ,null=True,blank=True)
     cid = models.ForeignKey(company, on_delete=models.CASCADE)
 
+# -------employeeloan----
 class EmployeeLoan(models.Model):  
       employee = models.ForeignKey(payrollemployee, on_delete=models.CASCADE)
       LoanAmount = models.IntegerField(blank=True,null=True)
@@ -2051,3 +2007,49 @@ class EmployeeLoan(models.Model):
       company = models.ForeignKey(company, on_delete=models.CASCADE)
       status = models.CharField(max_length=20,null=True)
       action= models.IntegerField(blank=True,null=True)
+
+   
+#-----deliver challan models----
+
+
+class challan(models.Model):
+    cid = models.ForeignKey(company, on_delete=models.CASCADE)
+    customer = models.ForeignKey(customer, on_delete=models.CASCADE)
+    chal_no=models.CharField(max_length=100)
+    challan_date=models.DateField()
+    challan_type=models.CharField(max_length=100)
+    billto=models.TextField(max_length=100)
+    taxamount=models.FloatField(default=0)
+    igst=models.FloatField(default=0)
+    cgst=models.FloatField(default=0)
+    sgst=models.FloatField(default=0)
+    subtotal=models.FloatField()
+    grand=models.FloatField()
+    pl=models.CharField(max_length=100)
+    note=models.TextField(max_length=100)
+    file = models.FileField(upload_to='challan/',default="default.png")
+    
+    invoice_status = (
+        ('Draft','Draft'),
+        
+        ('Invoiced','Invoiced'),
+
+    )
+    
+    status =models.CharField(max_length=150,choices=invoice_status,default='Draft')
+    ref=models.TextField(max_length=100)
+    shipping=models.IntegerField()
+
+
+class challanitem(models.Model):
+    product=models.TextField(max_length=255)
+    quantity=models.IntegerField()
+    hsn=models.TextField(max_length=255)
+    tax=models.IntegerField(default=0)
+    total=models.FloatField()
+    desc=models.TextField(max_length=255)
+    rate=models.FloatField()
+    dl=models.ForeignKey(challan,on_delete=models.CASCADE)
+    cid = models.ForeignKey(company, on_delete=models.CASCADE)
+    discount=models.FloatField(default=0)
+    
