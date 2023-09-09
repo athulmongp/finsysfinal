@@ -569,7 +569,7 @@
                <td style="width: 18%;" class='text-right'>
                     <div class='form-group mt-3 d-flex align-items-center'>
                         <select
-                            class='form-control  text-black border-0 item_select' name='item[]'
+                            class='form-control text-center text-black border-0 item_select' name='item[]'
                             id='item${RowCount}'>
                             {% for i in item %}
                                 {% if i.cid_id == cmp1.cid %}
@@ -597,9 +597,10 @@
                         <td style="width:10%;">
                     <input type="number" name='discount[]' value='0' id="discount${RowCount}" class="form-control discount" />
                             </td>
-                <td style="width: 13%;" class='text-right'> <select name='tax[]' id='tax${RowCount}'
-                        class="form-control  text-black text-right border-0 tax" onclick='state()' onclick='calc()' >
-                        <optgroup  label="GST">
+                <td style="width: 13%;" class='text-center'> <select name='tax[]' id='tax${RowCount}'
+                        class="form-control  text-black text-center border-0 tax" onclick='state()' onclick='calc()' >
+                        <optgroup  label="GST" style="background-color: black;">
+                            <option >Select</option>
                             <option value="0">GST 0%</option>
                             <option value="3">GST 3%</option>
                               <option value="5">GST 5%</option>
@@ -607,7 +608,8 @@
                               <option value="18" >GST 18%</option>
                               <option value="28">GST 28%</option>
                           </optgroup>
-                          <optgroup  label="IGST">
+                          <optgroup  label="IGST" style="background-color: black;">
+                            <option >Select</option>
                             <option value="0">IGST 0%</option>
                             <option value="3">IGST 3%</option>
                               <option value="5">IGST 5%</option>
@@ -719,7 +721,8 @@
             <h5 class="text-info">{{ cmp1.cemail }}</h5>
           </div> -->
           <div class="row">
-            <div class="col-md-3 mt-3">
+            <div class="col-md-5 mt-3 mr-4 ml-4">
+                
               <label class="col-form-label">Select Customer</label>
               <div class="d-flex">
                 <select name="customername" id="select" class="form-control" style="background-color: #2f516f; color: white;">
@@ -734,27 +737,44 @@
                   <button type="button" class="btn btn-outline-secondary ml-1">+</button>
               </a>
               </div>
-            </div>
-            <div class="col-md-3 mt-3">
-              <label class="col-form-label">Email </label>
-              <input class="custom-select" name="email" placeholder="Email" required style="background-color: #2f516f; color: white;" id="email">
+              
+                <label class="col-form-label mt-4 mb-2">Email </label>
+                <input class="custom-select" name="email" placeholder="Email" required style="background-color: #2f516f; color: white;" id="email">
+              
             </div>
             
-            <div class="col-md-3 mt-3">
+        
+                <div class="col-md-5 ml-4 mt-3">
+                  <label class="text-gray-light">Bill To:</label>
+                  <textarea class="form-control mb-4" name="bname" id="bname" rows="7" type="text" style="background-color: #2f516f; color: white;"></textarea>
+                </div>
+                <div class="col-md-3 mt-3">
+                  <input type="number" class="form-control mt-4" id="newtrm" placeholder="0" onchange="addtemopt(this)" style="display: none;">
+                </div>
+                <div class="col-md-3 mt-3"></div>
+                
+        </div>
+        <div class="row">
+            <div class="col-md-5 ml-4 mt-2 mr-4">
                 <label class="col-form-label">Challan number</label>
                 <input type="text"  id="ref" class="form-control" name="chal_no" value="DL-" style="background-color: #2f516f; color: white;" onselect="calc()">
               </div>
-            <div class="col-md-3 mt-3"></div>
-            <div class="col-md-3 mt-3"></div>
-          </div>
-          <div class="row">
-            <div class="col-md-3 mt-3">
-              <label class="col-form-label">Challan Date:</label>
-              <div>
-                <input type="date" value="{{ tod }}" class="form-control" name="challandate" style="background-color: #2f516f; color: white;">
+              <div class="col-md-5 ml-4 mt-3">
+                <label class="col-form-label">Challan Date:</label>
+                <div>
+                  <input type="date" value="{{ tod }}" class="form-control" name="challandate" style="background-color: #2f516f; color: white;">
+                </div>
               </div>
-            </div>
-            <div class="col-md-3 mt-3">
+        </div>
+
+            
+        <div class="row">
+            
+            
+          
+          
+            
+            <div class="col-md-5 ml-4 mt-3 mr-4">
               <label class="col-form-label">Challan Type </label>
               <div>
                 <select class="custom-select" name="terms" required style="background-color: #2f516f; color: white;" id="termadd" onclick="showinp('newtrm', this)">
@@ -766,7 +786,7 @@
                 </select>
               </div>
             </div>
-            <div class="col-md-3 mt-3">
+            <div class="col-md-5 ml-4 mt-3">
                 <label class="col-form-label">Refrence number</label>
                 <input type="text"  id="ref" class="form-control" name="ref" style="background-color: #2f516f; color: white;" onselect="calc()">
               </div>
@@ -774,61 +794,50 @@
             <div class="col-md-3 mt-3"></div>
           </div>
 
+          
           <div class="row">
-            <div class="col-md-3">
-              <label class="text-gray-light">Bill To:</label>
-              <textarea class="form-control mb-4" name="bname" id="bname" rows="7" type="text" style="background-color: #2f516f; color: white;"></textarea>
-            </div>
-            <div class="col-md-3 mt-3">
-              <input type="number" class="form-control mt-4" id="newtrm" placeholder="0" onchange="addtemopt(this)" style="display: none;">
-            </div>
-            <div class="col-md-3 mt-3"></div>
-            <div class="col-md-3 mt-3">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-3 mt-3">
+            <div class="col-md-5 ml-4 mt-3 mr-4">
               <label class="col-form-label">Place of supply</label>
               <select type="text" class="form-control " id="plosu" name="placosupply" style="background-color: #2f516f; color: white;" onclick="state()" onclick='calc()'>
                 <option value="{{ cmp1.state }}" selected> {{ cmp1.state }}</option>
-                <option value="Andaman and Nicobar Islads">Andaman and Nicobar Islads</option>
-                <option value="Andhra Predhesh">Andhra Predhesh</option>
-                <option value="Arunachal Predesh">Arunachal Predesh</option>
-                <option value="Assam">Assam</option>
-                <option value="Bihar">Bihar</option>
-                <option value="Chandigarh">Chandigarh</option>
-                <option value="Chhattisgarh">Chhattisgarh</option>
-                <option value="Dadra and Nagar Haveli">Dadra and Nagar Haveli</option>
-                <option value="Damn anad Diu">Damn anad Diu</option>
-                <option value="Delhi">Delhi</option>
-                <option value="Goa">Goa</option>
-                <option value="Gujarat">Gujarat</option>
-                <option value="Haryana">Haryana</option>
-                <option value="Himachal Predesh">Himachal Predesh</option>
-                <option value="Jammu and Kashmir">Jammu and Kashmir</option>
-                <option value="Jharkhand">Jharkhand</option>
-                <option value="Karnataka">Karnataka</option>
-                <option value="Kerala">Kerala</option>
-                <option value="Ladakh">Ladakh</option>
-                <option value="Lakshadweep">Lakshadweep</option>
-                <option value="Madhya Predesh">Madhya Predesh</option>
-                <option value="Maharashtra">Maharashtra</option>
-                <option value="Manipur">Manipur</option>
-                <option value="Meghalaya">Meghalaya</option>
-                <option value="Mizoram">Mizoram</option>
-                <option value="Nagaland">Nagaland</option>
-                <option value="Odisha">Odisha</option>
-                <option value="Puducherry">Puducherry</option>
-                <option value="Punjab">Punjab</option>
-                <option value="Rajasthan">Rajasthan</option>
-                <option value="Sikkim">Sikkim</option>
-                <option value="Tamil Nadu">Tamil Nadu</option>
-                <option value="Telangana">Telangana</option>
-                <option value="Tripura">Tripura</option>
-                <option value="Uttar Predesh">Uttar Predesh</option>
-                <option value="Uttarakhand">Uttarakhand</option>
-                <option value="West Bengal">West Bengal</option>
-                <option value="Other Territory">Other Territory</option>
+                        <option value="Andaman and Nicobar Islads">Andaman and Nicobar Islads</option>
+                        <option value="Andhra Predhesh">Andhra Predhesh</option>
+                        <option value="Arunachal Predesh">Arunachal Predesh</option>
+                        <option value="Assam">Assam</option>
+                        <option value="Bihar">Bihar</option>
+                        <option value="Chandigarh">Chandigarh</option>
+                        <option value="Chhattisgarh">Chhattisgarh</option>
+                        <option value="Dadra and Nagar Haveli">Dadra and Nagar Haveli</option>
+                        <option value="Damn anad Diu">Damn anad Diu</option>
+                        <option value="Delhi">Delhi</option>
+                        <option value="Goa">Goa</option>
+                        <option value="Gujarat">Gujarat</option>
+                        <option value="Haryana">Haryana</option>
+                        <option value="Himachal Predesh">Himachal Predesh</option>
+                        <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                        <option value="Jharkhand">Jharkhand</option>
+                        <option value="Karnataka">Karnataka</option>
+                        <option value="Kerala">Kerala</option>
+                        <option value="Ladakh">Ladakh</option>
+                        <option value="Lakshadweep">Lakshadweep</option>
+                        <option value="Madhya Predesh">Madhya Predesh</option>
+                        <option value="Maharashtra">Maharashtra</option>
+                        <option value="Manipur">Manipur</option>
+                        <option value="Meghalaya">Meghalaya</option>
+                        <option value="Mizoram">Mizoram</option>
+                        <option value="Nagaland">Nagaland</option>
+                        <option value="Odisha">Odisha</option>
+                        <option value="Puducherry">Puducherry</option>
+                        <option value="Punjab">Punjab</option>
+                        <option value="Rajasthan">Rajasthan</option>
+                        <option value="Sikkim">Sikkim</option>
+                        <option value="Tamil Nadu">Tamil Nadu</option>
+                        <option value="Telangana">Telangana</option>
+                        <option value="Tripura">Tripura</option>
+                        <option value="Uttar Predesh">Uttar Predesh</option>
+                        <option value="Uttarakhand">Uttarakhand</option>
+                        <option value="West Bengal">West Bengal</option>
+                        <option value="Other Territory">Other Territory</option>
               </select>
             </div>
             <div class="col-md-3 mt-3"></div>
@@ -856,7 +865,7 @@
                      <td>1</td>
                      <td style="width: 18%;" class="text-right">
                         <div class='form-group mt-3 d-flex align-items-center'>
-                            <select class='form-control border-0 mt-1 text-black text-right itm' name='item[]' id='item1'>
+                            <select class='form-control border-0 mt-1 text-black text-center itm' name='item[]' id='item1'>
                                 {% for i in item %}
                                     {% if i.cid_id == cmp1.cid %}
                                         <option value="{{ i.name  }}">{{ i.name  }}</option>
@@ -912,8 +921,9 @@
                                 <td style='width:10%'>
                                     <input type="number" value='0' name='discount[]' id="discount1" class="form-control discount" />
                                 </td>
-                        <td style="width: 13%;" class='text-right'> <select name="tax[]" id="tax1" class='form-control border-0 text-black text-right tax' onclick="state()" onclick="calc()"  >
-                          <optgroup label="GST">
+                        <td style="width: 13%; height: 10%;" class='text-center'> <select name="tax[]" id="tax1" class='form-control border-0 text-black text-center tax' onclick="state()" onclick="calc()"  >
+                          <optgroup label="GST" style="background-color: black;">
+                            <option >Select</option>
                             <option value="0">GST 0%</option>
                             <option value="3">GST 3%</option>
                               <option value="5">GST 5%</option>
@@ -921,7 +931,8 @@
                               <option value="18" >GST 18%</option>
                               <option value="28">GST 28%</option>
                           </optgroup>
-                          <optgroup   label="IGST">
+                          <optgroup   label="IGST" style="background-color: black;">
+                            <option >Select</option>
                             <option value="0">IGST 0%</option>
                             <option value="3">IGST 3%</option>
                               <option value="5">IGST 5%</option>
@@ -1083,12 +1094,14 @@ function test(taxamount) {
             console.log(state);
             document.getElementById('tr_cgst').style=('display: none');
             document.getElementById('tr_sgst').style= ('display: none');
-            document.getElementById('tr_igst').style= ('display: block');
+            document.getElementById('tr_igst').style= ('display: flex');
+            
         }
         else{
-          document.getElementById('tr_cgst').style=('display: block');
-            document.getElementById('tr_sgst').style= ('display: block');
+            document.getElementById('tr_cgst').style=('display: flex');
+            document.getElementById('tr_sgst').style= ('display: flex');
             document.getElementById('tr_igst').style= ('display: none');
+ 
         }
     }
 </script>
@@ -1110,102 +1123,108 @@ function test(taxamount) {
                                
                         
                     </tr>
+                    
+                    
                 </tbody>
           
             </table>
-            <button type="button" class="btn btn-success  text-white" style="background-color: rgb(6, 122, 6) ;"
-            id="add-row">Add Row</button>
+            <td style="border: none;"><a class="btn btn-outline-secondary ml-1" role="button" id="add-row">+</a></td>
+            <!-- <button type="button" class="btn btn-success  text-white" style="background-color: rgb(6, 122, 6) ;"
+            id="add-row">Add Row</button> -->
 
            
             
             </div>
           </div>
-          <div class="row clearfix" style="margin-top:20px">
+          <div class="row clearfix " style="margin-top:20px">
             <div class="col-md-6">
 
-                <textarea class="form-control"  id="" name="Note" placeholder="Note" style="height: 190px;"></textarea>
+                <textarea class="form-control mt-5"  id="" name="Note" placeholder="Note" style="height: 190px;"></textarea>
 
                 <input type="file" name="file"  style="margin-top: 10px; width: 70%;">
             </div>
 
-           
-            <div class="col-sm-6">
-              <table class="rounded table  text-white" style="background-color: rgba(51, 50, 48, 0.8);">
+            <div class="col-md-1"></div>
+            
+            <div class="col-md-5 table-responsive-md mt-3 " id="tab_logic_total" style="background-color:rgba(0,0,0,.4); border: 1px solid rgba(128, 128, 128, 0.6);">
                   
-                  <tr>
-                    <div>
+                <div class="p-3" > 
+                    <div class="row container-fluid p-2 m-0">
                     
-                        <label class="text-center  form-control" style=" width: 35%; font-weight: 10; background-color: #2f516f; color: white; ">Sub Total</label>
-                        <input  type="number" step="any" placeholder=0 class="form-control" id="subtotal" name="subtotal"
-                        style="width: 40%; margin-top: -45px; float: right; margin-right: 10px;"   readonly/>
+                        <div class="col-sm-4 mt-2" > <label class="text-center " >Sub Total</label></div>
+                        <div class="col-sm-1 mt-2">:</div>
+                        <div class="col-sm-7 mt-2"> <input  type="number" step="any" placeholder=0 class="form-control" id="subtotal" name="subtotal"
+                          readonly/></div>
                     </div>
-                  </tr>
-                  <tr>
-                    <div id="tr_igst">  
-                        <label class="text-center  form-control" style=" width: 35%; font-weight: 10; background-color: #2f516f; color: white; " >IGST</label>
-                        <input type="number" value=""
+                  
+                  
+                    <div class="row container-fluid p-2 m-0" id="tr_igst">  
+                        <div class="col-sm-4 mt-2" ><label class="text-center " >IGST</label></div>
+                        <div class="col-sm-1 mt-2">:</div>
+                        <div class="col-sm-7 mt-2"><input type="number" value=""
                         id='igst' name="igst"
                         placeholder='0.00'
                         class="form-control"
-                         style="width: 40%; margin-top: -45px; float: right; margin-right: 10px;"   readonly/>
+                         readonly/></div>
     
                     </div>
-                  </tr>
-               <tr>
-                <div id="tr_cgst" >
-                    <label class="text-center  form-control" style=" width: 35%; font-weight: 10; background-color: #2f516f; color: white; ">CGST</label>
-                    <input type="number" id='cgst' name="cgst" step="any" placeholder=0 
-                    class="form-control"
-                     style="width: 40%; margin-top: -45px; float: right; margin-right: 10px;"   readonly/>
+                  
+                    <div class="row container-fluid p-2 m-0" id="tr_cgst" >
+                        <div class="col-sm-4 mt-2" ><label class="text-center">CGST</label></div>
+                        <div class="col-sm-1 mt-2">:</div>
+                        <div class="col-sm-7 mt-2"><input type="number" id='cgst' name="cgst" step="any" placeholder=0 
+                        class="form-control"
+                           readonly/></div>
 
-                </div>
-               </tr>
-                <tr>
-                    <div id="tr_sgst" >
-                        <label class="text-center  form-control" style=" width: 35%; font-weight: 10; background-color: #2f516f; color: white; ">SGST</label>
-                        <input type="number" id='sgst' name="sgst" step="any" placeholder=0
+                    </div>
+               
+                    <div class="row container-fluid p-2 m-0" id="tr_sgst" >
+                        <div class="col-sm-4 mt-2" ><label class="text-center" >SGST</label></div>
+                        <div class="col-sm-1 mt-2">:</div>
+                        <div class="col-sm-7 mt-2"><input type="number" id='sgst' name="sgst" step="any" placeholder=0
                         class="form-control"
-                         style="width: 40%; margin-top: -45px; float: right; margin-right: 10px;"   readonly/>
+                         readonly/></div>
     
                     </div>
     
-                </tr>
-                <tr>
-                    <div style="margin-top: 8px;">
-                        <label class="text-center  form-control" style=" width: 35%; font-weight: 10; background-color: #2f516f; color: white; ">Total Tax</label>
-                        <input type="number" id="total_taxamount" name="totaltax" placeholder=0 step="any"
+                
+                    <div  class="row container-fluid p-2 m-0">
+                        <div class="col-sm-4 mt-2" ><label class="text-center" >Total Tax</label></div>
+                        <div class="col-sm-1 mt-2">:</div>
+                        <div class="col-sm-7 mt-2"><input type="number" id="total_taxamount" name="totaltax" placeholder=0 step="any"
                         class="form-control"
-                        style="width: 40%; margin-top: -45px; float: right; margin-right: 10px;"   readonly/>
+                           readonly/></div>
         
                     </div>
-                </tr>
-                <tr>
-                    <div style="margin-top: 8px;">
-                        <label class="text-center  form-control" style=" width: 35%; font-weight: 10; background-color: #2f516f; color: white; ">Shipping Charge</label>
-                        <input type="number" id="ship" name="ship" placeholder=0 step="any" value="0" required
+                
+                
+                    <div class="row container-fluid p-2 m-0">
+                        <div class="col-sm-4 mt-2" ><label class="text-center" >Shipping Charge</label></div>
+                        <div class="col-sm-1 mt-2">:</div>
+                        <div class="col-sm-7 mt-2"><input type="number" id="ship" name="ship" placeholder=0 step="any" value="0" required
                         class="form-control ship"
-                        style="width: 40%; margin-top: -45px; float: right; margin-right: 10px;"  />
+                         /></div>
         
                     </div>
-                </tr>
-                    <tr>
-                        <div style="margin-top: 8px;">
-                            <label class="text-center  form-control" style=" width: 35%; font-weight: 10; background-color: #2f516f; color: white; ">Grand Total</label>
-                            <input type="number" id="total_with_tax" name="t_total" value=0 step="any"
+                
+                    <div class="row container-fluid p-2 m-0">
+                            <div class="col-sm-4 mt-2" ><label class="text-center">Grand Total</label></div>
+                            <div class="col-sm-1 mt-2">:</div>
+                            <div class="col-sm-7 mt-2"><input type="number" id="total_with_tax" name="t_total" value=0 step="any"
                             class="form-control"
-                            style="width: 40%; margin-top: -45px; float: right; margin-right: 10px;"   readonly/>
+                             readonly/></div>
           
-                        </div>
+                    </div>
                        
                           
-                    </tr>
+                    
                    
                 
 
                  
                  
-              </table>
-          </div>
+                </div>
+            </div>
       </div>
     
         </div>

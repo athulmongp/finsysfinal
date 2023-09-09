@@ -874,6 +874,7 @@ transform: rotate(-45deg); */
                                         </div>
                                     </div>
                                     <hr>
+                                   
                                     <hr>
                                     <div class="row">
                                         <div class="col mt-3">
@@ -959,7 +960,7 @@ transform: rotate(-45deg); */
                                     <div class="row">
                                         <div class="col-md-4 ml-5 mr-5 mt-3">
                                             <label for="title">
-                                                <h6><b>Total </b></h6>
+                                                <h6><b>Sub Total </b></h6>
                                             </label>
                                         </div>
                                         <div class="col-md-4 ml-5 mt-3">
@@ -969,21 +970,61 @@ transform: rotate(-45deg); */
                                     </div>
                                     <hr>
                                     <hr>
+                                    
                                     {% endfor %}
-                                    <!-- <div class="row">
+                                    {% if estimate.igst == 0 %}
+                                    <div class="row">
                                         <div class="col-md-4 ml-5 mr-5 mt-3">
                                             <label for="title">
-                                                <h6><b>MonthlyCuting (INR) </b></h6>
+                                                <h6><b>CGST</b> </h6>
                                             </label>
                                         </div>
                                         <div class="col-md-4 ml-5 mt-3">
-                                            <label for="title"><b>: {{ employee.MonthlyCut_Amount }}</b></label>
+                                            <label for="title"><b>: {{ estimate.cgst }}</b></label>
 
                                         </div>
                                     </div>
                                     <hr>
-                                    
                                     <div class="row">
+                                        <div class="col-md-4 ml-5 mr-5 mt-3">
+                                            <label for="title">
+                                                <h6><b>SGST</b> </h6>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4 ml-5 mt-3">
+                                            <label for="title"><b>: {{ estimate.sgst }}</b></label>
+
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    {% else %}
+                                    <div class="row">
+                                        <div class="col-md-4 ml-5 mr-5 mt-3">
+                                            <label for="title">
+                                                <h6><b>IGST</b> </h6>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4 ml-5 mt-3">
+                                            <label for="title"><b>: {{ estimate.igst }}</b></label>
+
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    {% endif %}
+                                     <div class="row">
+                                        <div class="col-md-4 ml-5 mr-5 mt-3">
+                                            <label for="title">
+                                                <h6><b>Total</b></h6>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4 ml-5 mt-3">
+                                            <label for="title"><b>: {{ estimate.grand }}</b></label>
+
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <hr>
+                                    <!--<div class="row">
                                         <div class="col-md-4 ml-5 mr-5 mt-3">
                                             <label for="title">
                                                 <h6><b>MonthlyCuting (INR) </b></h6>
@@ -1006,39 +1047,43 @@ transform: rotate(-45deg); */
                         <div class="col-lg-4 bg-grey">
                             <div class="p-5">
 
-                                <h3 class="fw-bold mb-2 mt-2 pt-1">Employee Details</h3>
+                                <h3 class="fw-bold mb-2 mt-2 pt-1">Customer Details</h3>
                                 <hr class="my-4">
                                 <div class="d-flex justify-content-between mb-4">
                                     <h6 class="">Status</h6>
-                                    {{ employee.employee.status }}
+                                    {{ estimate.customer.status }}
                                 </div>
                                 <div class="d-flex justify-content-between mb-4">
-                                    <h6 class="">Designation</h6>
-                                    {{ employee.employee.designation }}
+                                    <h6 class="">Join Date</h6>
+                                    {{ estimate.customer.date }}
                                 </div>
                                 <div class="d-flex justify-content-between mb-4">
-                                    <h6 class="">Employee No:</h6>
-                                    {{ employee.employee.employeeno }}
+                                    <h6 class="">Name</h6>
+                                    {{ estimate.customer.firstname }}{{ estimate.customer.lastname }}
                                 </div>
                                 <div class="d-flex justify-content-between mb-4">
-                                    <h6 class="">Function</h6>
-                                    {{ employee.employee.function }}
+                                    <h6 class="">Customer Id</h6>
+                                    {{ estimate.customer.customerid }}
+                                </div>
+                                <div class="d-flex justify-content-between mb-4">
+                                    <h6 class="">Email Id</h6>
+                                    {{ estimate.customer.email }}
                                 </div>
 
                                 <div class="d-flex justify-content-between mb-4">
-                                    <h6 class="">Date Of Joining</h6>
-                                    {{ employee.employee.joindate }}
+                                    <h6 class="">Phone Number</h6>
+                                    {{ estimate.customer.mobile }}
                                 </div>
 
                                 <div class="d-flex justify-content-between mb-4">
-                                    <h6 class="">Contact</h6>
-                                    {{ employee.employee.mobile }}
+                                    <h6 class="">Location</h6>
+                                    {{ estimate.customer.location }}
                                 </div>
                                 <div class="d-flex justify-content-between mb-4">
-                                    <h6 class="">Email</h6>
-                                    {{ employee.employee.email }}
+                                    <h6 class="">Opening Balance</h6>
+                                    {{ estimate.customer.opening_balance }}
                                 </div>
-                                {% if employee.salarydetails == "Yes"%}
+                                <!-- {% if employee.salarydetails == "Yes"%}
                                 <h3 class="fw-bold mb-2 mt-2 pt-1">Salary Details</h3>
                                 <hr class="my-4">
 
@@ -1072,7 +1117,7 @@ transform: rotate(-45deg); */
                                     {{ employee.employee.amount }}
                                 </div>
 
-                                {% endif %}
+                                {% endif %} -->
 
 
                                 <!-- <h3 class="fw-bold mb-2 mt-2 pt-1"> Bank Account Details</h3>
@@ -1163,7 +1208,7 @@ transform: rotate(-45deg); */
             <div class="card-body">
                 <div class="card-title">
                     <center>
-                        <h2 class="mb-0">DELIVERY CHALLAN VIEW</h2>
+                        <h2 class="mb-0">VIEW DELIVERY CHALLAN</h2>
                         <h4></h4>
                     </center>
                     <hr>

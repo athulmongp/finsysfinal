@@ -41355,18 +41355,24 @@ def challancreate(request):
             total=request.POST.getlist('amount[]')
             discount=request.POST.getlist('discount[]')
             cl_id=challan.objects.get(id=inv2.id)
-            if len(product)==len(hsn)==len(quantity)==len(desc)==len(tax)==len(total)==len(rate)==len(discount):
+            if len(product)==len(hsn)==len(quantity)==len(desc)==len(tax)==len(total)==len(rate)==len(discount) and product and hsn  and quantity and rate and tax and desc and total:
 
                 mapped = zip(product,hsn,quantity,desc,tax,total,rate,discount)
                 mapped = list(mapped)
                 for element in mapped:
-                    created = challanitem.objects.get_or_create(dl=cl_id,product=element[0],hsn=element[1],
+                    created = challanitem.objects.create(dl=cl_id,product=element[0],hsn=element[1],
                                             quantity=element[2],desc=element[3],tax=element[4],total=element[5],rate=element[6],cid=cmp1,discount=element[7])
-                    return redirect('delivery_challan')
+                    print('first')
+            return redirect('delivery_challan')
         print('1')
         return redirect('goadd_dl_challan')
     
-
+# if len(items)==len(hsn)==len(quantity)==len(rate)==len(tax)==len(disc)==len(amount) and items and hsn  and quantity and rate and tax and disc and amount:
+#                 mapped=zip(items,hsn ,quantity,rate,tax,disc,amount)
+#                 mapped=list(mapped)
+#                 for ele in mapped:
+#                     itemAdd  = estimate_item.objects.create(item = ele[0],hsn=ele[1],
+#                     quantity=ele[2],rate=ele[3],tax=ele[4],discount = ele[5],total=ele[6] ,estimate = estimateid,cid=cmp1)
 
 def editchallan(request,id):
         customers = customer.objects.all()
