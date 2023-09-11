@@ -112,7 +112,7 @@
                                 <tr onclick="window.location='delivery_view/{{ p.id }}';">
                                     <td>{{ p.challan_date | date:'d-m-Y' }}</td>
                                     <td>{{ p.chal_no }}</a></td>
-                                    <td>{{ p.ref  }}</td>
+                                    <td>{{ p.customer.firstname }} {{ p.customer.lastname }}</td>
                                     <td>{{ p.customer.email }}</td>
                                     <td>{{ p.status }}</td>
                                     <td>{{ p.grand }}</td>

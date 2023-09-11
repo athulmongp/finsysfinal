@@ -713,8 +713,8 @@ transform: rotate(-45deg); */
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{% url 'challan_add_file' estimate.id %}" method="POST" enctype="multipart/form-data">{%
-                csrf_token %}
+            <form action="{% url 'challan_add_file' estimate.id %}" method="POST" enctype="multipart/form-data">
+                {%csrf_token %}
                 <div class="modal-body">
                     <input type="file" class="form-control" name="file">
                 </div>
@@ -761,10 +761,10 @@ transform: rotate(-45deg); */
 
 
                                 <a href="{% url 'deletechallan' estimate.id %}"
-                                    class=" fa fa-trash btn btn-outline-info rounded-pill text-grey mt-3 mb-3"
+                                    class=" fa fa-trash btn btn-outline-info rounded-pill text-grey mt-3 mb-3 ml-2"
                                     role="button"> Delete</a>
                                 <!-- <div class="dropdown  " > -->
-                                    <li class=" dropdown-toggle  fa fa-sort btn btn-outline-info rounded-pill text-grey mt-3 mb-3" data-toggle="dropdown"> &nbsp;Convert
+                                    <li class=" dropdown-toggle  fa fa-sort btn btn-outline-info rounded-pill text-grey mt-3 mb-3 ml-2" data-toggle="dropdown"> &nbsp;Convert
                                     </li>
                                     <ul class="dropdown-menu" style="background-color: black;">
                                         <a class="dropdown-item " href="{% url 'challan_convert1' estimate.id %}">
@@ -887,11 +887,11 @@ transform: rotate(-45deg); */
                                     <div class="row">
                                         <div class="col-md-4 ml-5 mr-5 mt-3">
                                             <label for="title">
-                                                <h6><b>Product Name </b></h6>
+                                                <h5><b>Product Name </b></h5>
                                             </label>
                                         </div>
                                         <div class="col-md-4 ml-5 mt-3">
-                                            <label for="title"><b>: {{ j.product }}</b></label>
+                                            <h5 for="title"><b>: {{ j.product }}</b></h5>
 
                                         </div>
                                     </div>
@@ -960,11 +960,11 @@ transform: rotate(-45deg); */
                                     <div class="row">
                                         <div class="col-md-4 ml-5 mr-5 mt-3">
                                             <label for="title">
-                                                <h6><b>Sub Total </b></h6>
+                                                <h5><b>Sub Total </b></h5>
                                             </label>
                                         </div>
                                         <div class="col-md-4 ml-5 mt-3">
-                                            <label for="title"><b>: {{ j.total }}</b></label>
+                                            <h5 for="title"><b>: {{ j.total }}</b></h5>
 
                                         </div>
                                     </div>
@@ -1014,11 +1014,11 @@ transform: rotate(-45deg); */
                                      <div class="row">
                                         <div class="col-md-4 ml-5 mr-5 mt-3">
                                             <label for="title">
-                                                <h6><b>Total</b></h6>
+                                                <h5><b>Total</b></h5>
                                             </label>
                                         </div>
                                         <div class="col-md-4 ml-5 mt-3">
-                                            <label for="title"><b>: {{ estimate.grand }}</b></label>
+                                            <h5 for="title"><b>: {{ estimate.grand }}</b></h5>
 
                                         </div>
                                     </div>
@@ -1204,7 +1204,84 @@ transform: rotate(-45deg); */
     </div>
 
     <div id="statment" style="display: none; ">
+
+
         <div class="card radius-15">
+            <div class="card-body">
+                <div class="card-title">
+                    <center><h2 class="mb-0">VIEW DELIVERY CHALLAN</h2> <h4></h4></center>
+                    <hr>
+                </div>
+                <div class="btn-group" style="float: left; ">
+
+
+                    <a style="padding: 10px; cursor: pointer;" onclick="Overview()"> Overview</a>
+
+                    <a style="padding: 10px; cursor: pointer;" onclick="Statment()"> Statement</a>
+                </div>
+                <nav class="navbar navbar-expand-lg navbar-light" style="background-color:rgba(0,0,0,.01);">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarScroll">
+                        <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                          <li class="nav-item mx-1">
+                            <a href="{% url 'editchallan' estimate.id %}" role="button" class=" btn btn-outline-info rounded-pill text-grey p-1"> &nbsp;&nbsp;Edit&nbsp;&nbsp;</a>
+
+                          </li>
+                          <li class="nav-item mx-1">
+                            <a  href="{% url 'deletechallan' estimate.id %}" role="button"id="deleteButton" class=" btn btn-outline-info rounded-pill text-grey p-1">&nbsp;&nbsp;Delete&nbsp;&nbsp; 
+                            </a>
+                          </li>
+                            <li class="nav-item active mx-1" >
+                            <a class="nav-link text-light  btn btn-outline-info rounded-pill text-grey p-1" role="button" onclick="window.print()">&nbsp;&nbsp;Print&nbsp;&nbsp;<span class="sr-only">(current)</span></a>
+                            </li>
+      
+                            <li class="nav-item mx-1">
+                              <a class="btn btn-outline-info rounded-pill text-grey p-1" role="button" href="{% url 'render_pdfchallan_view' estimate.id %}" id="downloadButton" >&nbsp;&nbsp;PDF&nbsp;&nbsp;</a>
+                            </li>
+
+                            <div class="dropdown p-0 nav-item mx-1 " style="margin-top: 10px;">
+                              <li  class="btn btn-outline-info rounded-pill text-grey p-1  dropdown-toggle  "data-toggle="dropdown"> &nbsp;&nbsp;Convert&nbsp;&nbsp;</li>
+                                <ul class="dropdown-menu" style="background-color: black;">
+                                    <a class="dropdown-item " href="{% url 'challan_convert1' estimate.id %}"> &nbsp;Approved </a>
+                                    
+                                </ul>
+                              
+                            </div>
+                            
+
+                            <div class="dropdown p-0 nav-item mx-1 "  style="margin-top: 10px;" onclick="uplodfile()">
+                              <li  class=" dropdown-toggle btn btn-outline-info rounded-pill text-grey p-1"data-toggle="dropdown"> &nbsp;&nbsp;Share&nbsp;&nbsp;</li>
+                              <ul class="dropdown-menu" style="background-color: black;">
+      
+                                  <li style="margin-left: 50px;"  ></i>{% post_to_facebook object_or_url "Facebook!" %}</li>
+                                  <li style="margin-left: 50px;" > {% post_to_whatsapp object_or_url "WhatsApp" %}</li>
+                                  <li style="margin-left: 50px;" >{% send_email object.title "New Song: {{object.title}}. Check it out!" object_or_url "Email" %}</li>
+                                  
+                              </ul>
+                            </div>
+  
+                            <div class="dropdown p-0 nav-item mx-1 "  style="margin-top: 10px;">
+                                <li  class=" dropdown-toggle btn btn-outline-info rounded-pill text-grey p-1"data-toggle="dropdown">&nbsp;&nbsp;Attach file&nbsp;&nbsp;</li>
+                                <ul class="dropdown-menu" style="background-color: black;">
+                                    <a class="dropdown-item" style="cursor: pointer;" data-toggle="modal" data-target="#exampleModal">Attach file</a>
+                                    {% if estimate.file != "default.jpg" %}
+                                        <a class="dropdown-item fas fa-download" style="cursor: pointer;"download  href="{{estimate.file.url}}" >Download file</a>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </ul>
+                    </div>
+                </nav>
+            
+                
+            </div>
+        </div>
+
+
+
+        <!-- <div class="card radius-15">
             <div class="card-body">
                 <div class="card-title">
                     <center>
@@ -1223,34 +1300,44 @@ transform: rotate(-45deg); */
                 <div class="btn-group" style="float: right; ">
 
 
-                    <a href="{% url 'editchallan' estimate.id %}" class=" fa fa-pencil"
-                        style="padding: 10px; cursor: pointer;"> Edit</a>
+                    <a href="{% url 'editchallan' estimate.id %}" class=" fa fa-pencil btn btn-outline-info rounded-pill text-grey mt-4 mb-4 mr-2">
+                        Edit</a>
 
 
-                    <a style="padding: 10px; margin-top: -5px; cursor: pointer;">
+                    <a href="{% url 'deletechallan' estimate.id %}" class=" fa fa-trash-o btn btn-outline-info rounded-pill text-grey mt-4 mb-4 mr-2">
 
-                        <form action="{% url 'deletechallan' estimate.id %}">
-                            <i class="fa fa-trash-o delete"> Delete</i>
-                            <input name="_method" type="hidden" value="DELETE">
-
-                        </form>
+                        Delete
                     </a>
 
-                    <div class="dropdown  " style="padding: 10px; cursor: pointer; margin-top: -10px;"
-                        onclick="uplodfile()">
-                        <li class=" dropdown-toggle fa fa-share-alt " data-toggle="dropdown"> &nbsp;Share
+                    <div class="dropdown  btn btn-outline-info rounded-pill text-grey p-1" 
+                         onclick="uplodfile()">
+                        <li class=" dropdown-toggle" data-toggle="dropdown"> Share
                         </li>
                         <ul class="dropdown-menu" style="background-color: black;">
-                            <!-- <a class="dropdown-item fa fa-facebook" target="_blank" 
-                               > &nbsp;</a>{% post_to_facebook object_or_url "<p style='color: green;'>facebook</p>" %}
-                               
-                                <a class="dropdown-item fa fa-whatsapp" href=""> &nbsp;Whatsapp</a>
-                                <a class="dropdown-item fa fa-envelope-o" href=""> &nbsp;Email</a> -->
+                           
 
 
                             <li style="margin-left: 50px;"> {% post_to_whatsapp object_or_url "WhatsApp" %}</li>
-                            <li style="margin-left: 50px;">{% send_email object.title "New Delivery Challan:
-                                {{object.title}}. Check it out!" object_or_url "Email" %}</li>
+                            <li style="margin-left: 50px;">{% send_email object.title "New Delivery Challan:{{object.title}}. Check it out!" object_or_url "Email" %}</li>
+
+
+
+                        </ul>
+
+                    </div>
+                    <div class="dropdown  btn btn-outline-info rounded-pill text-grey p-1 ml-3">
+                        
+                        <li class=" dropdown-toggle fa fa-download " data-toggle="dropdown"> &nbsp;Download
+                        </li>
+                        <ul class="dropdown-menu" style="background-color: black;">
+                            
+
+
+                            <li style="margin-left: 50px;"><a class="fa fa-print"
+                                href="{% url 'render_pdfchallan_view' estimate.id %}"> PDF</a></li>
+                            <li style="margin-left: 50px;"><a class="fa fa-print" onclick="printSpecificArea()">
+                                Print</a>
+                            </li>
 
 
 
@@ -1259,12 +1346,9 @@ transform: rotate(-45deg); */
                     </div>
 
 
-                    <a class="fa fa-print" style="padding: 10px; cursor: pointer;"
-                        href="{% url 'render_pdfchallan_view' estimate.id %}"> PDF</a>
-                    <a class="fa fa-print" style="padding: 10px; cursor: pointer;" onclick="printSpecificArea()">
-                        Print</a>
-
-                    <div class="dropdown  " style="padding: 10px; cursor: pointer; margin-top: -14px;">
+                    
+                    
+                    <div class="dropdown  btn btn-outline-info rounded-pill text-grey p-1 ml-3">
                         <li class=" dropdown-toggle  " data-toggle="dropdown"> &nbsp;Convert
                         </li>
                         <ul class="dropdown-menu" style="background-color: black;">
@@ -1276,7 +1360,7 @@ transform: rotate(-45deg); */
                     </div>
 
 
-                    <div class="dropdown  " style="padding: 10px; cursor: pointer; margin-top: -8px;">
+                    <div class="dropdown  btn btn-outline-info rounded-pill text-grey p-1 ml-3" >
                         <li class=" dropdown-toggle fa fa-download  " data-toggle="dropdown"> &nbsp;Attach file
                         </li>
                         <ul class="dropdown-menu" style="background-color: black;">
@@ -1295,7 +1379,7 @@ transform: rotate(-45deg); */
 
                 </div>
             </div>
-        </div>
+        </div> -->
 
 
 
@@ -1338,7 +1422,7 @@ transform: rotate(-45deg); */
                                 </div>
                                 <div class="col-6">
                                     <p>TO,</p>
-                                    <h5>{{estimate.customer}}</h5>
+                                    <h5>{{estimate.customer.firstname}}{{estimate.customer.lastname}}</h5>
                                     <p class="address col-10" style="margin-left: -14px;"> {{ estimate.billto}} </p>
 
                                 </div>
@@ -1398,7 +1482,7 @@ transform: rotate(-45deg); */
                     </section>
 
                     <section class="balance-info">
-                        <div class="row">
+                        <div class="row mt-5">
                             <div class="col-8">
                                 <p class="m-0 font-weight-bold" style="color:black"> Note: </p>
                                 <p style="color:black">{{estimate.note}}</p>
@@ -1409,19 +1493,19 @@ transform: rotate(-45deg); */
                                         <td style="color:black; font-weight:bold">Sub Total :</td>
                                         <td style="color:black; font-weight:bold">{{estimate.subtotal}}</td>
                                     </tr>
-                                    {% if estimate.igst != "0" %}
+                                    {% if estimate.igst != 0 %}
                                     <tr>
                                         <td style="color:black; font-weight:bold">IGST :</td>
                                         <td style="color:black; font-weight:bold">{{estimate.igst}}</td>
                                     </tr>
                                     {% endif %}
-                                    {% if estimate.cgst != "0" %}
+                                    {% if estimate.cgst != 0 %}
                                     <tr>
                                         <td style="color:black; font-weight:bold">CGST :</td>
                                         <td style="color:black; font-weight:bold">{{estimate.cgst}}</td>
                                     </tr>
                                     {% endif %}
-                                    {% if estimate.sgst != "0" %}
+                                    {% if estimate.sgst != 0 %}
                                     <tr>
                                         <td style="color:black; font-weight:bold">SGST:</td>
                                         <td style="color:black; font-weight:bold">{{estimate.sgst}}</td>

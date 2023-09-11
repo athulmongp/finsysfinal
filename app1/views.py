@@ -28314,10 +28314,8 @@ def goinvoices(request):
     try:
         cmp1 = company.objects.get(id=request.session["uid"])
         customers = customer.objects.filter(cid=cmp1).all()
-        invs = invoice.objects.filter(cid=cmp1).values()
-        for i in invs:
-            cust = " " . join(i['customername'].split(" ")[1:])
-            i['cust'] = cust
+        invs = invoice.objects.filter(cid=cmp1)
+        
         context = {'invoice': invs, 'customers': customers, 'cmp1': cmp1}
         return render(request, 'app1/invoices.html', context)
     except:
@@ -28356,7 +28354,7 @@ def invoice_view(request,id):
 
     cmp1 = company.objects.get(id=request.session['uid'])
     upd = invoice.objects.get(invoiceid=id, cid=cmp1)
-    cust = customer.objects.get(customerid = upd.customername.split(" ")[0])
+    cust = customer.objects.get(firstname = upd.customername.split(" ")[0])
     invitem = invoice_item.objects.filter(invoice=id)
 
     igst = upd.IGST
@@ -41274,7 +41272,7 @@ def challan_add_file(request,id):
         
         if len(request.FILES) != 0:
            
-            if est.file != "default.jpg":
+            if est.file == "default.jpg":
                  os.remove(est.file.path)
                 
             est.file=request.FILES['file']
@@ -41407,8 +41405,11 @@ def edited_challan(request,id):
        
             cmp1 = company.objects.get(id=request.session['uid'])
             ch = challan.objects.get(id=id, cid=cmp1)
-            ch.customer=request.POST['customername']
-            ch.cx_mail = request.POST['email']
+            cust=request.POST['customername']
+            # customer.objects.get(email=cust)
+            customers = customer.objects.get(customerid=cust)
+            ch.customer = customers
+            # ch.cx_mail = request.POST['email']
             ch.challan_date=request.POST['challandate']
             ch.challan_type=request.POST['terms']
             ch.billto=request.POST['bname']
@@ -41515,11 +41516,13 @@ def render_pdfchallan_view(request,id):
 def challan_convert1(request,id):
     cmp1 = company.objects.get(id=request.session['uid'])
     upd = challan.objects.get(id=id, cid=cmp1)
-
     upd.status = 'Approved'
     upd.save()
+    invo=invoice(invoiceno=upd.id,cid=cmp1,customername=upd.customer.firstname,email=upd.customer.email,
+                                   invoicedate=upd.challan_date, duedate=upd.challan_date,bname=upd.billto,placosupply=upd.pl,grandtotal=upd.grand,
+                                   subtotal=upd.subtotal,IGST=upd.igst,CGST=upd.cgst,SGST=upd.sgst,taxamount=upd.taxamount,shipping_charge=upd.shipping,status='Approved')
 
-
+    invo.save()
 
     return redirect(delivery_view,id)
 
@@ -41550,7 +41553,7 @@ def gochallan2(request):
 def sort_chellan_customername(request):
     cmp1 = company.objects.get(id=request.session["uid"])
     customers = customer.objects.filter(cid=cmp1).all()
-    invs = challan.objects.filter(cid=cmp1).order_by('customer')
+    invs = challan.objects.filter(cid=cmp1).order_by('customer__firstname','customer__lastname')
     context = { 'invoice': invs,'customers': customers, 'cmp1': cmp1}
     return render(request,'app1/delivery_challan.html', context)
 

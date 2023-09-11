@@ -341,7 +341,7 @@ class invoice(models.Model):
 
     amtrecvd = models.IntegerField(default=0, null=True)
     # taxamount = models.IntegerField(default=0, null=True)
-    baldue = models.FloatField()
+    baldue = models.FloatField(default=0, null=True)
     subtotal = models.IntegerField(default=0, null=True)
     grandtotal = models.FloatField(default=0, null=True)
     invoice_orderno = models.CharField(max_length=255, default='', null=True)
@@ -354,7 +354,7 @@ class invoice(models.Model):
 
     )
     
-    status =models.CharField(max_length=150,choices=invoice_status,default='Draft')
+    status =models.CharField(max_length=150,default='Draft')
 
     note = models.CharField(max_length=255,default='', null=True)
     file = models.FileField(upload_to='invoice',default="default.jpg")
