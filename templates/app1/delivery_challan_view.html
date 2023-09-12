@@ -764,6 +764,7 @@ transform: rotate(-45deg); */
                                     class=" fa fa-trash btn btn-outline-info rounded-pill text-grey mt-3 mb-3 ml-2"
                                     role="button"> Delete</a>
                                 <!-- <div class="dropdown  " > -->
+                                {% if estimate.status != 'Approved' %}    
                                     <li class=" dropdown-toggle  fa fa-sort btn btn-outline-info rounded-pill text-grey mt-3 mb-3 ml-2" data-toggle="dropdown"> &nbsp;Convert
                                     </li>
                                     <ul class="dropdown-menu" style="background-color: black;">
@@ -772,6 +773,7 @@ transform: rotate(-45deg); */
 
 
                                     </ul>
+                                {% endif %}    
                                 <!-- </div> -->
                                 <button type="button"
                                     class="btn btn-outline-info rounded-pill text-grey mt-3 mb-3 ml-3   fa fa-paperclip"
@@ -1011,6 +1013,30 @@ transform: rotate(-45deg); */
                                     </div>
                                     <hr>
                                     {% endif %}
+                                    <div class="row">
+                                        <div class="col-md-4 ml-5 mr-5 mt-3">
+                                            <label for="title">
+                                                <h6><b>Shipping Charge</b> </h6>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4 ml-5 mt-3">
+                                            <label for="title"><b>: {{ estimate.shipping }}</b></label>
+
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-4 ml-5 mr-5 mt-3">
+                                            <label for="title">
+                                                <h6><b>Adjustment</b> </h6>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4 ml-5 mt-3">
+                                            <label for="title"><b>: {{ estimate.adjustment }}</b></label>
+
+                                        </div>
+                                    </div>
+                                    <hr>
                                      <div class="row">
                                         <div class="col-md-4 ml-5 mr-5 mt-3">
                                             <label for="title">
@@ -1207,7 +1233,7 @@ transform: rotate(-45deg); */
 
 
         <div class="card radius-15">
-            <div class="card-body">
+            <div class="card-body" id="card">
                 <div class="card-title">
                     <center><h2 class="mb-0">VIEW DELIVERY CHALLAN</h2> <h4></h4></center>
                     <hr>
@@ -1234,22 +1260,22 @@ transform: rotate(-45deg); */
                             </a>
                           </li>
                             <li class="nav-item active mx-1" >
-                            <a class="nav-link text-light  btn btn-outline-info rounded-pill text-grey p-1" role="button" onclick="window.print()">&nbsp;&nbsp;Print&nbsp;&nbsp;<span class="sr-only">(current)</span></a>
+                            <a class="nav-link text-light  btn btn-outline-info rounded-pill text-grey p-1" role="button" id="btn"  onclick="window.print()">&nbsp;&nbsp;Print&nbsp;&nbsp;<span class="sr-only">(current)</span></a>
                             </li>
       
                             <li class="nav-item mx-1">
                               <a class="btn btn-outline-info rounded-pill text-grey p-1" role="button" href="{% url 'render_pdfchallan_view' estimate.id %}" id="downloadButton" >&nbsp;&nbsp;PDF&nbsp;&nbsp;</a>
                             </li>
-
-                            <div class="dropdown p-0 nav-item mx-1 " style="margin-top: 10px;">
-                              <li  class="btn btn-outline-info rounded-pill text-grey p-1  dropdown-toggle  "data-toggle="dropdown"> &nbsp;&nbsp;Convert&nbsp;&nbsp;</li>
-                                <ul class="dropdown-menu" style="background-color: black;">
-                                    <a class="dropdown-item " href="{% url 'challan_convert1' estimate.id %}"> &nbsp;Approved </a>
+                            {% if estimate.status != 'Approved' %}
+                                <div class="dropdown p-0 nav-item mx-1 " style="margin-top: 10px;">
+                                    <li  class="btn btn-outline-info rounded-pill text-grey p-1  dropdown-toggle  "data-toggle="dropdown"> &nbsp;&nbsp;Convert&nbsp;&nbsp;</li>
+                                        <ul class="dropdown-menu" style="background-color: black;">
+                                        <a class="dropdown-item " href="{% url 'challan_convert1' estimate.id %}"> &nbsp;Approved </a>
                                     
-                                </ul>
+                                        </ul>
                               
-                            </div>
-                            
+                                </div>
+                            {% endif %}
 
                             <div class="dropdown p-0 nav-item mx-1 "  style="margin-top: 10px;" onclick="uplodfile()">
                               <li  class=" dropdown-toggle btn btn-outline-info rounded-pill text-grey p-1"data-toggle="dropdown"> &nbsp;&nbsp;Share&nbsp;&nbsp;</li>
@@ -1382,12 +1408,12 @@ transform: rotate(-45deg); */
         </div> -->
 
 
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.debug.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
         <div id="whatToPrint">
 
             <div class="my-5 page" size="A4" id="printArea">
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.debug.js"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+                
 
                 <div class="p-5">
                     <div id="ember2512" class="tooltip-container ember-view ribbon text-ellipsis">
@@ -1448,6 +1474,8 @@ transform: rotate(-45deg); */
                                     <td style="color:black">Quantity</td>
                                     <td style="color:black">Discount</td>
                                     <td style="color:black">Tax</td>
+                                 
+                            
                                     <td style="color:black">Total</td>
                                 </tr>
                             </thead>
@@ -1468,7 +1496,8 @@ transform: rotate(-45deg); */
                                     <td style="color:black">{{j.rate}}</td>
                                     <td style="color:black">{{j.quantity}}</td>
                                     <td style="color:black">{{j.discount}}</td>
-                                    <td style="color:black">{{j.tax}} %</td>
+                                    <td style="color:black">{{j.tax}} %</td> 
+                                    
                                     <td style="color:black">{{j.total}}</td>
                                 </tr>
 
@@ -1519,6 +1548,10 @@ transform: rotate(-45deg); */
                                     <tr>
                                         <td style="color:black; font-weight:bold">Shipping Charge:</td>
                                         <td style="color:black; font-weight:bold">{{estimate.shipping}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color:black; font-weight:bold">Adjustment:</td>
+                                        <td style="color:black; font-weight:bold">{{estimate.adjustment}}</td>
                                     </tr>
 
                                     <tfoot>
@@ -1611,16 +1644,38 @@ transform: rotate(-45deg); */
     });
 
 </script>
+<style>
+    @media only print {
+        body{
+            visibility: hidden;
+        }
+        .card h2{
+            visibility: visible;
+        }
+        #whatToPrint{
+            visibility: visible;
+            
+        }
+    }
+</style>
 <script>
     function printSpecificArea() {
         var printContents = document.getElementById("whatToPrint").innerHTML;
         var originalContents = document.body.innerHTML;
-
+        document.getElementById('card').style='dissplay:none'
         document.body.innerHTML = printContents;
-        window.print();
-
+        printContents.window.print();
         document.body.innerHTML = originalContents;
     }
+//     function printFunction() {
+//             var divContents = document.getElementById("whatToPrint").innerHTML;
+//             var prnt = window.open('', '', 'height=2000px, width=2000px');
+//              prnt .document.write(divContents);
+//             prnt .document.close();
+//             prnt.window.print();
+// }
+
+  
 
 
     function Overview() {

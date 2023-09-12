@@ -1014,6 +1014,10 @@ function calc() {
     // get the shipping charge value
     var shippingCharge = parseFloat($('#ship').val());
 
+    var Adjustment = parseFloat($('#Adjustment').val());
+    
+
+
     // update the subtotal and total tax amount input fields
     $('#subtotal').val(total.toFixed(2));
     $('#total_taxamount').val(taxamount.toFixed(2));
@@ -1034,9 +1038,28 @@ function calc() {
     calc(); // Call the calc() function whenever the shipping value changes
     });
 
+    
+// check if adjustment charge exists
+        if (!isNaN(Adjustment) && Adjustment !== 0) {
+            total_with_tax += Adjustment;
+            $('#total_with_tax').val(total_with_tax.toFixed(2) );
+        } else {
+            $('#total_with_tax').val(total_with_tax.toFixed(2));
+        }
+    
+// Event listener for the adjustment input field    
+    $('#Adjustment').on('input', function() {
+    calc(); // Call the calc() function whenever the adjustment value changes
+    });  
+
+    // calculate the total amount including tax and shipping charge
+    var total_with_tax = total + taxamount;
+
     test(taxamount);
 
+
 }
+
 
   // Update subtotal when a row is deleted
     $(document).ready(function dlt () {
@@ -1285,7 +1308,7 @@ function test(taxamount) {
                     <div class="row container-fluid p-2 m-0" id="tr_igst">  
                         <div class="col-sm-4 mt-2" ><label class="text-center " >IGST</label></div>
                         <div class="col-sm-1 mt-2">:</div>
-                        <div class="col-sm-7 mt-2"><input type="number" value=""
+                        <div class="col-sm-7 mt-2"><input type="number" 
                         id='igst' name="igst" value="{{ch.igst}}"
                         placeholder='0.00'
                         class="form-control"
@@ -1323,12 +1346,20 @@ function test(taxamount) {
                 
                 
                     <div class="row container-fluid p-2 m-0">
-                        <div class="col-sm-4 mt-2" ><label class="text-center" >Shipping Charge</label></div>
+                        <div class="col-sm-4 mt-2" ><label class="text-center" onclick="calc()">Shipping Charge</label></div>
                         <div class="col-sm-1 mt-2">:</div>
                         <div class="col-sm-7 mt-2"><input type="number" id="ship" name="ship" value="{{ch.shipping}}" placeholder=0 step="any" value="0" required
                         class="form-control ship"
                          /></div>
         
+                    </div>
+                    <div class="row container-fluid p-2 m-0">
+                        <div class="col-sm-4 mt-2" ><label class="text-center" oninput="calc()">Adjustment</label></div>
+                        <div class="col-sm-1 mt-2">:</div>
+                        <div class="col-sm-7 mt-2"><input type="number" id="Adjustment" name="Adjustment" value="{{ch.adjustment}}" placeholder=0 step="any" value="0" required
+                        class="form-control" /></div>    
+                    
+    
                     </div>
                 
                     <div class="row container-fluid p-2 m-0">

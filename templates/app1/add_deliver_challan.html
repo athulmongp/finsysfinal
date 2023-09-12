@@ -65,7 +65,7 @@
                     document.getElementById('rate1').value = data3
                     document.getElementById('desc1').value = data1
                     
-                    document.getElementById('qty1').value = data2
+                    // document.getElementById('qty1').value = data2
                     var pos = document.getElementById('plosu').value;
                     var comp = "{{cmp1.state}}"
                   
@@ -119,7 +119,7 @@
 
                     document.getElementById('rate2').value = data3
                     document.getElementById('desc2').value = data1                    
-                    document.getElementById('qty2').value = data2
+                    // document.getElementById('qty2').value = data2
 
                     var pos = document.getElementById('plosu').value;
                     var comp = "{{cmp1.state}}"
@@ -179,7 +179,7 @@
                     document.getElementById('rate3').value = data3
                     document.getElementById('desc3').value = data1
                     
-                    document.getElementById('qty3').value = data2
+                    // document.getElementById('qty3').value = data2
                     var pos = document.getElementById('plosu').value;
                     var comp = "{{cmp1.state}}"
                   
@@ -235,7 +235,7 @@
                     document.getElementById('rate4').value = data3
                     document.getElementById('desc4').value = data1
                     
-                    document.getElementById('qty4').value = data2
+                    // document.getElementById('qty4').value = data2
                     var pos = document.getElementById('plosu').value;
                     var comp = "{{cmp1.state}}"
                   
@@ -291,7 +291,7 @@
                     document.getElementById('rate5').value = data3
                     document.getElementById('desc5').value = data1
                     
-                    document.getElementById('qty5').value = data2
+                    // document.getElementById('qty5').value = data2
                     var pos = document.getElementById('plosu').value;
                     var comp = "{{cmp1.state}}"
                   
@@ -348,7 +348,7 @@
                     document.getElementById('rate6').value = data3
                     document.getElementById('desc6').value = data1
                     
-                    document.getElementById('qty6').value = data2
+                    // document.getElementById('qty6').value = data2
                     var pos = document.getElementById('plosu').value;
                     var comp = "{{cmp1.state}}"
                   
@@ -406,7 +406,7 @@
                     document.getElementById('rate7').value = data3
                     document.getElementById('desc7').value = data1
                     
-                    document.getElementById('qty7').value = data2
+                    // document.getElementById('qty7').value = data2
                     var pos = document.getElementById('plosu').value;
                     var comp = "{{cmp1.state}}"
                   
@@ -464,7 +464,7 @@
                     document.getElementById('rate8').value = data3
                     document.getElementById('desc8').value = data1
                     
-                    document.getElementById('qty8').value = data2
+                    // document.getElementById('qty8').value = data2
                     var pos = document.getElementById('plosu').value;
                     var comp = "{{cmp1.state}}"
                   
@@ -503,7 +503,7 @@
                     console.log(response)
                     data = response.hsn
                     data1 = response.desp
-                    data2 = response.qty
+                    // data2 = response.qty
                     data3 = response.price
                     data4 = response.gst
                     data5 = response.sgst
@@ -522,7 +522,7 @@
                     document.getElementById('rate9').value = data3
                     document.getElementById('desc9').value = data1
                     
-                    document.getElementById('qty9').value = data2
+                    // document.getElementById('qty9').value = data2
                     var pos = document.getElementById('plosu').value;
                     var comp = "{{cmp1.state}}"
                   
@@ -795,7 +795,7 @@
             <div class="col-md-5 ml-4 mt-3 mr-4">
               <label class="col-form-label">Place of supply</label>
               <select type="text" class="form-control " id="plosu" name="placosupply" style="background-color: #2f516f; color: white;" onclick="state()" onclick='calc()'>
-                <option value="{{ cmp1.state }}" selected> {{ cmp1.state }}</option>
+                <option value="{{ customers.state }}" selected> {{ customers.state }}</option>
                         <option value="Andaman and Nicobar Islads">Andaman and Nicobar Islads</option>
                         <option value="Andhra Predhesh">Andhra Predhesh</option>
                         <option value="Arunachal Predesh">Arunachal Predesh</option>
@@ -1001,6 +1001,10 @@ function calc() {
     // get the shipping charge value
     var shippingCharge = parseFloat($('#ship').val());
 
+    var Adjustment = parseFloat($('#Adjustment').val());
+    
+
+
     // update the subtotal and total tax amount input fields
     $('#subtotal').val(total.toFixed(2));
     $('#total_taxamount').val(taxamount.toFixed(2));
@@ -1021,9 +1025,38 @@ function calc() {
     calc(); // Call the calc() function whenever the shipping value changes
     });
 
+    
+// check if adjustment charge exists
+        if (!isNaN(Adjustment) && Adjustment !== 0) {
+            total_with_tax += Adjustment;
+            $('#total_with_tax').val(total_with_tax.toFixed(2) );
+        } else {
+            $('#total_with_tax').val(total_with_tax.toFixed(2));
+        }
+    
+// Event listener for the adjustment input field    
+    $('#Adjustment').on('input', function() {
+    calc(); // Call the calc() function whenever the adjustment value changes
+    });  
+
+    // calculate the total amount including tax and shipping charge
+    var total_with_tax = total + taxamount;
+
     test(taxamount);
 
+
 }
+
+
+
+
+
+
+
+
+
+
+
   // Update subtotal when a row is deleted
     $(document).ready(function dlt () {
         $('#item_table').on('click', '.delete-row', function () {
@@ -1198,10 +1231,16 @@ function test(taxamount) {
                         <div class="col-sm-4 mt-2" ><label class="text-center" >Shipping Charge</label></div>
                         <div class="col-sm-1 mt-2">:</div>
                         <div class="col-sm-7 mt-2"><input type="number" id="ship" name="ship" placeholder=0 step="any" value="0" required
-                        class="form-control ship"
-                         /></div>
+                        class="form-control ship" /></div>
+                    </div>    
+                        <div class="row container-fluid p-2 m-0">
+                            <div class="col-sm-4 mt-2" ><label class="text-center" >Adjustment</label></div>
+                            <div class="col-sm-1 mt-2">:</div>
+                            <div class="col-sm-7 mt-2"><input type="number" id="Adjustment" name="Adjustment" placeholder=0 step="any" value="0" required
+                            class="form-control" /></div>    
+                        
         
-                    </div>
+                        </div>
                 
                     <div class="row container-fluid p-2 m-0">
                             <div class="col-sm-4 mt-2" ><label class="text-center">Grand Total</label></div>
@@ -2194,7 +2233,8 @@ function test(taxamount) {
       }).done(function(response) {
         var json_data = JSON.parse(response);
         for (key in json_data) {
-          document.getElementById('email').value = json_data[key]['email']
+          document.getElementById('email').value = json_data[key]['email'];
+          document.getElementById('plosu').value = json_data[key]['state'];
           
 
           

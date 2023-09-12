@@ -28354,7 +28354,7 @@ def invoice_view(request,id):
 
     cmp1 = company.objects.get(id=request.session['uid'])
     upd = invoice.objects.get(invoiceid=id, cid=cmp1)
-    cust = customer.objects.get(firstname = upd.customername.split(" ")[0])
+    cust = customer.objects.filter(firstname = upd.customername.split(" ")[0])
     invitem = invoice_item.objects.filter(invoice=id)
 
     igst = upd.IGST
@@ -41337,9 +41337,10 @@ def challancreate(request):
                             sgst = float(request.POST['sgst']),
                             taxamount = float(request.POST['totaltax']),
                             grand=float(request.POST['t_total']),
-                            shipping=request.POST['ship'],
+                            shipping=float(request.POST['ship']),
                             ref=request.POST['ref'],
                             chal_no =request.POST['chal_no'],
+                            adjustment =float(request.POST['Adjustment']),
 
                         )
             inv2.save()
@@ -41422,7 +41423,8 @@ def edited_challan(request,id):
             ch.taxamount = float(request.POST['totaltax'])
             ch.ref=request.POST['ref']
             ch.chal_no=request.POST['chal_no']
-            ch.shipping=request.POST['ship']
+            ch.shipping=float(request.POST['ship'])
+            ch.adjustment=float(request.POST['Adjustment'])
             ch.grand=float(request.POST['t_total'])
             if len(request.FILES) != 0:
                 if len(ch.file) != "default.jpg" :

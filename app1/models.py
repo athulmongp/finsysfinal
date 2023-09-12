@@ -2020,9 +2020,9 @@ class challan(models.Model):
     challan_type=models.CharField(max_length=100)
     billto=models.TextField(max_length=100)
     taxamount=models.FloatField(default=0)
-    igst=models.FloatField(default=0)
-    cgst=models.FloatField(default=0)
-    sgst=models.FloatField(default=0)
+    igst=models.FloatField(default=0.00)
+    cgst=models.FloatField(default=0.00)
+    sgst=models.FloatField(default=0.00)
     subtotal=models.FloatField()
     grand=models.FloatField()
     pl=models.CharField(max_length=100)
@@ -2039,6 +2039,7 @@ class challan(models.Model):
     status =models.CharField(max_length=150,choices=invoice_status,default='Draft')
     ref=models.TextField(max_length=100)
     shipping=models.IntegerField()
+    adjustment=models.FloatField()
 
 
 class challanitem(models.Model):
