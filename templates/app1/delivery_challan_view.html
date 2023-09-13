@@ -1649,20 +1649,23 @@ transform: rotate(-45deg); */
         body{
             visibility: hidden;
         }
-        .card h2{
-            visibility: visible;
+        
+        .card {
+            display: none;
         }
         #whatToPrint{
             visibility: visible;
             
+            
         }
+        
     }
 </style>
 <script>
     function printSpecificArea() {
         var printContents = document.getElementById("whatToPrint").innerHTML;
         var originalContents = document.body.innerHTML;
-        document.getElementById('card').style='dissplay:none'
+        document.getElementById('card').style.display='none'
         document.body.innerHTML = printContents;
         printContents.window.print();
         document.body.innerHTML = originalContents;
